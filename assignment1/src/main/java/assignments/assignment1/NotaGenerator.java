@@ -17,39 +17,40 @@ public class NotaGenerator {
         while (!pilihan.equals("0")) {
             printMenu();
             System.out.print("Pilihan: ");
-            pilihan = input.next();
+            pilihan = input.nextLine();
             System.out.println("================================");
 
             if (pilihan.equals("1")) {
-                System.out.print("Masukkan nama Anda: ");
-                String nama = input.next();
-                System.out.print("Masukkan nomor handphone Anda: ");
-                input.nextLine();
-                String nomorHP = input.next();
-                while (nomorHP.matches("[0-9]+") != true) {
+                System.out.print("Masukkan nama Anda:\n");
+                String nama = input.nextLine();
+                System.out.print("Masukkan nomor handphone Anda:\n");
+                String nomorHP = input.nextLine();
+                while (nomorHP.matches("[0-9]+") != true || nomorHP.contains(" ")) {
                     System.out.println("Nomor hp hanya menerima digit");
-                    nomorHP = input.next();
+                    nomorHP = input.nextLine();
                 }
                 String id = generateId(nama, nomorHP);
                 System.out.println("ID anda: " + id);
 
             } else if (pilihan.equals("2")) {
-                System.out.print("Masukkan nama Anda: ");
-                String nama = input.next();
-                System.out.print("Masukkan nomor handphone Anda: ");
-                input.nextLine();
-                String nomorHP = input.next();
+                System.out.print("Masukkan nama Anda:\n");
+                String nama = input.nextLine();
+                System.out.print("Masukkan nomor handphone Anda:\n");
+                String nomorHP = input.nextLine();
+                while (nomorHP.matches("[0-9]+") != true || nomorHP.contains(" ")) {
+                    System.out.println("Nomor hp hanya menerima digit");
+                    nomorHP = input.nextLine();
+                }
                 String id = generateId(nama, nomorHP);
-                System.out.print("Masukkan tanggal terima: ");
-                String tanggal = input.next();
+                System.out.print("Masukkan tanggal terima:\n");
+                String tanggal = input.nextLine();
                 
                 String paket = "";
                 while (true) {
-                    System.out.print("Masukkan paket laundry: ");
-                    paket = input.next().toLowerCase();
+                    System.out.print("Masukkan paket laundry:\n");
+                    paket = input.nextLine().toLowerCase();
                     
                     if (paket.equals("express") || paket.equals("fast") || paket.equals("reguler")) {
-                        System.out.println("masuk");
                         break;
                     } else if (paket.equals("?")) {
                         showPaket();
@@ -59,10 +60,11 @@ public class NotaGenerator {
                 }
                 
                 int berat = 0;
-                System.out.print("Masukkan berat cucian Anda [Kg]: ");
+                System.out.print("Masukkan berat cucian Anda [Kg]:\n");
                 while (true) {
                     try {
                         berat = input.nextInt();
+                        input.nextLine();
                         if (berat > 0 && berat < 2) {
                             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
                             berat = 2;
