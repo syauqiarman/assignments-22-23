@@ -1,6 +1,8 @@
 package assignments.assignment1;
 
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class NotaGenerator {
     private static final Scanner input = new Scanner(System.in);
@@ -20,16 +22,20 @@ public class NotaGenerator {
 
             if (pilihan.equals("1")) {
                 System.out.print("Masukkan nama Anda: ");
-                String nama = input.next().toUpperCase();
+                String nama = input.next();
                 System.out.print("Masukkan nomor handphone Anda: ");
                 input.nextLine();
                 String nomorHP = input.next();
+                while (nomorHP.matches("[0-9]+") != true) {
+                    System.out.println("Nomor hp hanya menerima digit");
+                    nomorHP = input.next();
+                }
                 String id = generateId(nama, nomorHP);
                 System.out.println("ID anda: " + id);
 
             } else if (pilihan.equals("2")) {
                 System.out.print("Masukkan nama Anda: ");
-                String nama = input.next().toUpperCase();
+                String nama = input.next();
                 System.out.print("Masukkan nomor handphone Anda: ");
                 input.nextLine();
                 String nomorHP = input.next();
@@ -73,6 +79,7 @@ public class NotaGenerator {
                         input.nextLine();
                     }
                 }
+                System.out.println("Nota Laundry");
                 System.out.println(generateNota(id, paket, berat, tanggal));
 
             } else if (pilihan.equals("0")){
@@ -115,7 +122,7 @@ public class NotaGenerator {
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
         String [] perKata = nama.split(" ");
-        String kataPertama = perKata[0];
+        String kataPertama = perKata[0].toUpperCase();
         String namaNomor = kataPertama + "-" + nomorHP;
 
         int checkSum = 0;
@@ -130,6 +137,9 @@ public class NotaGenerator {
             }
         }
         String newCheckSum = ""+checkSum;
+        if (newCheckSum.length() == 1) {
+            newCheckSum = "0" + newCheckSum;
+        }
         String hasilId = namaNomor + "-" + newCheckSum.substring(newCheckSum.length()-2);
         return hasilId;
     }
@@ -151,18 +161,24 @@ public class NotaGenerator {
     public static String generateNota(String id, String paket, int berat, String tanggalTerima){
         // TODO: Implement generate nota sesuai soal.
         int biaya = 0;
+        String tanggalSelesai = "";
+        DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate cekFormat = LocalDate.parse(tanggalTerima, formatTanggal);
         if (paket.equals("express")) {
-            int durasi = 1;
+            LocalDate durasiExpress = cekFormat.plusDays(1);
+            tanggalSelesai = durasiExpress.format(formatTanggal);
             biaya = 12000;
         } else if (paket.equals("fast")) {
-            int durasi = 2;
+            LocalDate durasiFast = cekFormat.plusDays(2);
+            tanggalSelesai = durasiFast.format(formatTanggal);
             biaya = 10000;
         } else if (paket.equals("reguler")) {
-            int durasi = 3;
+            LocalDate durasiReguler = cekFormat.plusDays(3);
+            tanggalSelesai = durasiReguler.format(formatTanggal);
             biaya = 7000;
         }
 
         int total = berat * biaya;
-        return ("Nota Laundry\nID    : "+ id +"\nPaket : "+ paket +"\nHarga :\n"+ berat +" kg x "+ biaya +" = "+total+"\nTanggal Terima  : "+ tanggalTerima +"\nTanggal Selesai : [tanggalTerima + LamaHariPaket]");
+        return ("ID    : "+ id +"\nPaket : "+ paket +"\nHarga :\n"+ berat +" kg x "+ biaya +" = "+total+"\nTanggal Terima  : "+ tanggalTerima +"\nTanggal Selesai : " + tanggalSelesai);
     }
 }
