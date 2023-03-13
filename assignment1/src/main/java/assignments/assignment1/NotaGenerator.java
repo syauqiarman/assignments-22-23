@@ -86,7 +86,7 @@ public class NotaGenerator {
                 String beratStr = input.nextLine(); //memasukkan input ke variabel beratStr
                 
                 /*mengecek validasi dari input beratStr yang telah dilakukan menggunakan while loop
-                while loop akan mengecek satu persatu dari inputan beratStr, yang dianggap benar adalah 1 sampai 9
+                while loop akan mengecek satu persatu dari inputan beratStr, yang dianggap benar adalah 0 sampai 9
                 lalu di or jika ada spasi di beratStr maka juga akan meminta input ulang
                 di or lagi dengan beratStr yang di integerkan dan sama dengan 0*/
                 while (beratStr.matches("[0-9]+") != true || beratStr.contains(" ") || Integer.parseInt(beratStr) == 0) {
@@ -123,7 +123,7 @@ public class NotaGenerator {
     /**
      * Method untuk menampilkan paket.
      */
-    private static void showPaket() {
+    public static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
@@ -157,7 +157,7 @@ public class NotaGenerator {
             if (karakter >= 'A' && karakter <= 'Z') {
                 checkSum += (int) karakter - 'A' + 1;   // melakukan perhitungan checkSum
             
-            // jika karakter tersebut angka 1-9 maka akan masuk sini
+            // jika karakter tersebut angka 0-9 maka akan masuk sini
             } else if (karakter >= '0' && karakter <= '9') {
                 checkSum += (int) karakter - '0';   // melakukan perhitungan checkSum
             
@@ -232,8 +232,16 @@ public class NotaGenerator {
         }
 
         int total = berat * biaya;  // menghitung total harga yang harus dibayar
-        System.out.println("Nota Laundry");
+        System.out.println("Berhasil menambahkan nota!");
+        
         // mereturn format dari keluaran nota
-        return ("ID    : "+ id +"\nPaket : "+ paket +"\nHarga :\n"+ berat +" kg x "+ biaya +" = "+total+"\nTanggal Terima  : "+ tanggalTerima +"\nTanggal Selesai : " + tanggalSelesai);
+        return ("ID    : "+ id 
+        +"\nPaket : "+ paket 
+        +"\nHarga :\n"+ berat 
+        +" kg x "+ biaya 
+        +" = "+ total 
+        +  "\nTanggal Terima  : "+ tanggalTerima 
+        +"\nTanggal Selesai : " + tanggalSelesai + 
+        "\nStatus      	: [apaan dah tuh]");
     }
 }
