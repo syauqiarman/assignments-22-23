@@ -233,6 +233,7 @@ public class NotaGenerator {
 
         int total = berat * biaya;  // menghitung total harga yang harus dibayar
         System.out.println("Berhasil menambahkan nota!");
+        //System.out.println("ID Nota =" + idNota);
         
         // mereturn format dari keluaran nota
         return ("ID    : "+ id 

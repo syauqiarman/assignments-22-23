@@ -49,4 +49,7 @@ public class Nota {
     public int getIdNota() {
         return idNota;
     }
+    public void setIdNota(Integer idNota) {
+        this.idNota = idNota;
+    }
 }

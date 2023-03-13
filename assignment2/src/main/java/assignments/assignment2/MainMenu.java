@@ -13,6 +13,7 @@ public class MainMenu {
     private static ArrayList<Member> memberList = new ArrayList<>();
     private static ArrayList<Nota> notaList = new ArrayList<>();
     private static String tanggalSekarang = fmt.format(cal.getTime());
+    private static int idNotaCounter = 0;
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -47,30 +48,37 @@ public class MainMenu {
                     nomorHP = input.nextLine();
                 }
                 Member memberBaru = new Member(nama, nomorHP);
+                
                 if (memberList.size() == 0) {
                     memberList.add(memberBaru);
                     System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");
                 } else {
-                    for (int i = 0; i < memberList.size();i++) {
-                        if (memberList.get(i).getId().equals(memberBaru.getId())) {
+                    boolean check = true;
+                    for (Member i : memberList) {
+                        if (i.getId().equals(memberBaru.getId())) {
+                            check = true;
                             System.out.println("Member dengan nama " + nama + " dan nomor hp " + nomorHP + " sudah ada!");
+                            break;
                         } else {
-                            memberList.add(memberBaru);
-                            System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");
-                            
+                            check = false;
                         }
-                        break;
+                    }
+                    if (check == false) {
+                        memberList.add(memberBaru);
+                        System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !"); 
                     }
                 }
-                System.out.println(memberList);  //CEEEKKKK
+                System.out.println(memberList);  //CEK
     }
 
     private static void handleGenerateNota() {
-        // TODO: handle ambil cucian
+        // TODO: handle generate nota
         System.out.print("Masukan ID member: ");
         String checkID = input.nextLine();
-        for (int i = 0; i < memberList.size();i++) {
-            if (memberList.get(i).getId().equals(checkID)) {
+        boolean check = true;
+        for (Member i : memberList) {
+            if (i.getId().equals(checkID)) {
+                check = true;
                 // variabel yang berisi string kosong untuk mempersiapkan hasil dari input paket dan awal
                 String paket = "";
                 String awal = "";
@@ -104,18 +112,36 @@ public class MainMenu {
                 }
                 int beratInt = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
                 Nota notaBaru = new Nota (checkID, paket, beratInt, tanggalSekarang);
-                notaList.add(notaBaru);
+
+                if (notaList.size() == 0) {
+                    idNotaCounter = 0;
+                    notaBaru.setIdNota(idNotaCounter);
+                    notaList.add(notaBaru);
+                } else {
+                    idNotaCounter += 1;
+                    notaBaru.setIdNota(idNotaCounter);
+                    notaList.add(notaBaru);
+                }
+                break;
             } else {
-                System.out.println("Member dengan ID " + checkID + "tidak ditemukan!");
+                check = false;
             }
-            break;
         }
-        System.out.println(notaList);
+        if (check == false) {
+            System.out.println("Member dengan ID " + checkID + " tidak ditemukan!");
+        }
+        System.out.println(notaList); //CEK
+        for (Nota i : notaList) {
+            System.out.println("ID: " +i.getCheckID()+ "\npaket: " +i.getPaket()+ "\nberat: " +i.getBerat()+ "\ntanggal sekarang: " +i.getTanggalMasuk()+ "\nID Nota: " + i.getIdNota());
+        } //CEK
     }
 
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
         System.out.println("Terdaftar " +notaList.size()+ " nota dalam sistem.");
+        for (Nota i : notaList) {
+            System.out.println("- [" +i.getIdNota()+ "] Status\t: [BISA DIAMBIL/BELUM]");
+        }
     }
 
     private static void handleListUser() {
