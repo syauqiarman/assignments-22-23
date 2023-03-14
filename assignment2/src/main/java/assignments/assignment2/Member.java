@@ -1,12 +1,13 @@
 package assignments.assignment2;
 
-import static assignments.assignment1.NotaGenerator.*;
+import assignments.assignment1.NotaGenerator;
 
 public class Member {
     // TODO: tambahkan attributes yang diperlukan untuk class ini
     //instance variables
     private String nama;
     private String noHp;
+    private int bonusCounter = 0;
 
     public Member(String nama, String noHp) {
         // TODO: buat constructor untuk class ini
@@ -32,6 +33,20 @@ public class Member {
     }
 
     public String getId() {
-        return  (generateId(nama, noHp));
+        return  (NotaGenerator.generateId(nama, noHp));
+    }
+
+    public int getBonusCounter() {
+        return bonusCounter;
+    }
+
+    public void setBonusCounter() {
+        bonusCounter +=1; 
+    }
+
+    public void resetBonusCounter() {
+        if (bonusCounter >= 3) {
+            bonusCounter = 0;
+        }  
     }
 }

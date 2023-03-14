@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import static assignments.assignment1.NotaGenerator.*;
-
+//import static assignments.assignment1.NotaGenerator.*;
+import assignments.assignment1.NotaGenerator;
 public class MainMenu {
     private static final Scanner input = new Scanner(System.in);
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -95,7 +95,7 @@ public class MainMenu {
                     
                     //pengecekan variabel paket jika isinya adalah "?"
                     } else if (paket.equals("?")) { 
-                        showPaket();    //memanggil method showPaket yang isinya adalah jenis jenis paket yang disediakan
+                        NotaGenerator.showPaket();    //memanggil method showPaket yang isinya adalah jenis jenis paket yang disediakan
                     
                     //kondisi jika paket tidak diketahui dan akan me loop kembali
                     } else {    
@@ -111,15 +111,18 @@ public class MainMenu {
                     beratStr = input.nextLine();
                 }
                 int beratInt = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
-                Nota notaBaru = new Nota (checkID, paket, beratInt, tanggalSekarang);
-
+                Nota notaBaru = new Nota (checkID, paket, beratInt, tanggalSekarang, i);
+                notaBaru.setSisaHariPengerjaan();
+                //idNota
                 if (notaList.size() == 0) {
                     idNotaCounter = 0;
                     notaBaru.setIdNota(idNotaCounter);
+                    notaBaru.getMember().setBonusCounter();
                     notaList.add(notaBaru);
                 } else {
                     idNotaCounter += 1;
                     notaBaru.setIdNota(idNotaCounter);
+                    notaBaru.getMember().setBonusCounter();
                     notaList.add(notaBaru);
                 }
                 break;
@@ -130,6 +133,7 @@ public class MainMenu {
         if (check == false) {
             System.out.println("Member dengan ID " + checkID + " tidak ditemukan!");
         }
+
         System.out.println(notaList); //CEK
         for (Nota i : notaList) {
             System.out.println("ID: " +i.getCheckID()+ "\npaket: " +i.getPaket()+ "\nberat: " +i.getBerat()+ "\ntanggal sekarang: " +i.getTanggalMasuk()+ "\nID Nota: " + i.getIdNota());
@@ -140,7 +144,10 @@ public class MainMenu {
         // TODO: handle list semua nota pada sistem
         System.out.println("Terdaftar " +notaList.size()+ " nota dalam sistem.");
         for (Nota i : notaList) {
-            System.out.println("- [" +i.getIdNota()+ "] Status\t: [BISA DIAMBIL/BELUM]");
+            if (i.getIsReady() == false) {
+                System.out.println("- [" +i.getIdNota()+ "] Status\t: Belum bisa diambil :(");
+            } else if (i.getIsReady() == true)
+            System.out.println("- [" +i.getIdNota()+ "] Status\t: Sudah dapat diambil!");
         }
     }
 
@@ -161,7 +168,13 @@ public class MainMenu {
             checkIdNotaString = input.nextLine();
         }
         int checkIdNotaInt = Integer.parseInt(checkIdNotaString);
-        //tinggal bikin idnota, ngecek ada ngga idnota nya, ngecek udah beres blm lewat tanggal
+        for (Nota i : notaList) {
+            if (i.getIdNota() == checkIdNotaInt) {
+                //lakukan checkout ngecek udah beres blm lewat tanggal
+            } else {
+                System.out.println("Nota dengan ID " +checkIdNotaInt+ " tidak ditemukan!");
+            }
+        }
     }
 
     private static void handleNextDay() {
@@ -169,8 +182,17 @@ public class MainMenu {
         cal.add(Calendar.DATE, 1);    // menambah 1 hari
         tanggalSekarang = fmt.format(cal.getTime());
         System.out.println(tanggalSekarang);
+        for (Nota i : notaList) {
+            i.kurangSisaHariPengerjaan();
+            i.checkSisaHariPengerjaan();
+        }
         System.out.println("Dek Depe tidur hari ini... zzz...");
-        System.out.println("Laundry dengan nota ID [BERAPA] sudah dapat diambil!");
+        for (Nota i : notaList) {
+            System.out.println(i.getIsReady());
+            if (i.getIsReady()){
+                System.out.println("Laundry dengan nota ID " +i.getIdNota()+ " sudah dapat diambil!");
+            }
+        }
         System.out.println("Selamat pagi dunia!\nDek Depe: It's CuciCuci Time.");
     }
 
