@@ -68,12 +68,13 @@ public class MainMenu {
                         System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !"); 
                     }
                 }
-                System.out.println(memberList);  //CEK
+                // System.out.println("-----CHECK-----");
+                // System.out.println(memberList);  //CEK
     }
 
     private static void handleGenerateNota() {
         // TODO: handle generate nota
-        System.out.print("Masukan ID member: ");
+        System.out.print("Masukan ID member:\n");
         String checkID = input.nextLine();
         boolean check = true;
         for (Member i : memberList) {
@@ -113,18 +114,13 @@ public class MainMenu {
                 int beratInt = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
                 Nota notaBaru = new Nota (checkID, paket, beratInt, tanggalSekarang, i);
                 notaBaru.setSisaHariPengerjaan();
+                notaBaru.getMember().setBonusCounter();
                 //idNota
-                if (notaList.size() == 0) {
-                    idNotaCounter = 0;
-                    notaBaru.setIdNota(idNotaCounter);
-                    notaBaru.getMember().setBonusCounter();
-                    notaList.add(notaBaru);
-                } else {
-                    idNotaCounter += 1;
-                    notaBaru.setIdNota(idNotaCounter);
-                    notaBaru.getMember().setBonusCounter();
-                    notaList.add(notaBaru);
-                }
+                notaBaru.setIdNota(idNotaCounter);
+                notaList.add(notaBaru);
+                idNotaCounter += 1;
+
+                System.out.println(notaBaru.getNota());
                 break;
             } else {
                 check = false;
@@ -134,10 +130,11 @@ public class MainMenu {
             System.out.println("Member dengan ID " + checkID + " tidak ditemukan!");
         }
 
-        System.out.println(notaList); //CEK
-        for (Nota i : notaList) {
-            System.out.println("ID: " +i.getCheckID()+ "\npaket: " +i.getPaket()+ "\nberat: " +i.getBerat()+ "\ntanggal sekarang: " +i.getTanggalMasuk()+ "\nID Nota: " + i.getIdNota());
-        } //CEK
+        // System.out.println("-----CHECK-----");
+        // System.out.println(notaList); //CEK
+        // for (Nota i : notaList) {
+        //     System.out.println("ID: " +i.getCheckID()+ "\npaket: " +i.getPaket()+ "\nberat: " +i.getBerat()+ "\ntanggal sekarang: " +i.getTanggalMasuk()+ "\nID Nota: " + i.getIdNota());
+        // } //CEK 
     }
 
     private static void handleListNota() {
@@ -147,7 +144,7 @@ public class MainMenu {
             if (i.getIsReady() == false) {
                 System.out.println("- [" +i.getIdNota()+ "] Status\t: Belum bisa diambil :(");
             } else if (i.getIsReady() == true)
-            System.out.println("- [" +i.getIdNota()+ "] Status\t: Sudah dapat diambil!");
+                System.out.println("- [" +i.getIdNota()+ "] Status\t: Sudah dapat diambil!");
         }
     }
 
@@ -161,7 +158,11 @@ public class MainMenu {
 
     private static void handleAmbilCucian() {
         // TODO: handle ambil cucian
-        System.out.print("Masukan ID nota yang akan diambil: ");
+        boolean check = true;
+        boolean check2 = true;
+        Object removeNota = new Object();
+        int removeIdNota = 0;
+        System.out.print("Masukan ID nota yang akan diambil:\n");
         String checkIdNotaString = input.nextLine();
         while (checkIdNotaString.matches("[0-9]+") != true || checkIdNotaString.contains(" ")) {
             System.out.println("ID nota berbentuk angka!");
@@ -171,9 +172,24 @@ public class MainMenu {
         for (Nota i : notaList) {
             if (i.getIdNota() == checkIdNotaInt) {
                 //lakukan checkout ngecek udah beres blm lewat tanggal
+                if (i.getIsReady() == false) {
+                    System.out.println("Nota dengan ID " +i.getIdNota()+ " gagal diambil!");
+
+                } else if (i.getIsReady() == true)
+                    check = false;
+                    removeNota = i;
+                    removeIdNota = i.getIdNota();
+                break;
             } else {
-                System.out.println("Nota dengan ID " +checkIdNotaInt+ " tidak ditemukan!");
+                check2 = false;
             }
+        }
+        if (check == false) {
+            notaList.remove(removeNota);
+            System.out.println("Nota dengan ID " +removeIdNota+ " berhasil diambil!");
+        }
+        if (check2 == false) {
+            System.out.println("Nota dengan ID " +checkIdNotaInt+ " tidak ditemukan!");
         }
     }
 

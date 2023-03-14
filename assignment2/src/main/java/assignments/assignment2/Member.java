@@ -45,8 +45,6 @@ public class Member {
     }
 
     public void resetBonusCounter() {
-        if (bonusCounter >= 3) {
-            bonusCounter = 0;
-        }  
+        bonusCounter = 0;
     }
 }

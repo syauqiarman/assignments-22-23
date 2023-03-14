@@ -1,10 +1,9 @@
+//backup fix NotaGenerator
 package assignments.assignment1;
 // import package yang diperlukan
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import assignments.assignment2.Member;
-import assignments.assignment2.Nota;
 
 //public class
 public class NotaGenerator {
@@ -17,7 +16,7 @@ public class NotaGenerator {
         // TODO: Implement interface menu utama
         // variabel yang berisi string kosong untuk mempersiapkan hasil dari input pilihan
         String pilihan = "";
-    
+
         //while loop jika input yang dimasukkan bukan "0" akan masuk loop
         while (!pilihan.equals("0")) {
             printMenu();    //memanggil method printMenu yang isinya ucapan selamat datang dan pilihan opsi
@@ -195,7 +194,7 @@ public class NotaGenerator {
      *         <p>Tanggal Selesai : [tanggalTerima + LamaHariPaket]
      */
 
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima, Member member){
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima){
         // TODO: Implement generate nota sesuai soal.
         
         // jika parameter berat yang masuk <2 maka masuk sini
@@ -206,7 +205,6 @@ public class NotaGenerator {
 
         //  variable yang berisi 0 untuk mempersiapkan hasil dari perhitungan
         int biaya = 0;
-        int total = 0;
         // variabel kosong untuk mempersiapkan hasil dari operasi tanggal
         String tanggalSelesai = "";
 
@@ -233,35 +231,10 @@ public class NotaGenerator {
             tanggalSelesai = durasiReguler.format(formatTanggal);   // menyesuaikan formatnya
             biaya = 7000;   // biaya yang diperlukan
         }
-        if (diskon == 3) {
-            total = berat * biaya * 50 / 100;  // menghitung total harga yang harus dibayar dengan diskon
-        } else {
-            total = berat * biaya; // menghitung total harga yang harus dibayar
-        }
-        
-        System.out.println("Berhasil menambahkan nota!");
-        //System.out.println("ID Nota =" + idNota);
-        
-        // mereturn format dari keluaran nota
-        if (diskon == 3) {
-            return ("ID    : "+ id 
-            +"\nPaket : "+ paket 
-            +"\nHarga :\n"+ berat 
-            +" kg x "+ biaya 
-            +" = "+ total + 
-            "(Discount member 50%!!!)\nTanggal Terima  : "+ tanggalTerima 
-            +"\nTanggal Selesai : " + tanggalSelesai + 
-            "\nStatus      	: Belum bisa diambil :(");
-        } else {
-            return ("ID    : "+ id 
-            +"\nPaket : "+ paket 
-            +"\nHarga :\n"+ berat 
-            +" kg x "+ biaya 
-            +" = "+ total 
-            +  "\nTanggal Terima  : "+ tanggalTerima 
-            +"\nTanggal Selesai : " + tanggalSelesai + 
-            "\nStatus      	: Belum bisa diambil :(");
-        }
 
+        int total = berat * biaya;  // menghitung total harga yang harus dibayar
+        System.out.println("Nota Laundry");
+        // mereturn format dari keluaran nota
+        return ("ID    : "+ id +"\nPaket : "+ paket +"\nHarga :\n"+ berat +" kg x "+ biaya +" = "+total+"\nTanggal Terima  : "+ tanggalTerima +"\nTanggal Selesai : " + tanggalSelesai);
     }
 }
