@@ -1,4 +1,3 @@
-//backup fix NotaGenerator
 package assignments.assignment1;
 // import package yang diperlukan
 import java.util.Scanner;

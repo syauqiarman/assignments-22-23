@@ -1,11 +1,11 @@
 package assignments.assignment2;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.ArrayList;
-
-//import static assignments.assignment1.NotaGenerator.*;
 import assignments.assignment1.NotaGenerator;
+
 public class MainMenu {
     private static final Scanner input = new Scanner(System.in);
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
@@ -53,17 +53,15 @@ public class MainMenu {
                     memberList.add(memberBaru);
                     System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");
                 } else {
-                    boolean check = true;
+                    boolean memberIdFound = false;
                     for (Member i : memberList) {
                         if (i.getId().equals(memberBaru.getId())) {
-                            check = true;
+                            memberIdFound = true;
                             System.out.println("Member dengan nama " + nama + " dan nomor hp " + nomorHP + " sudah ada!");
                             break;
-                        } else {
-                            check = false;
                         }
                     }
-                    if (check == false) {
+                    if (!memberIdFound) {
                         memberList.add(memberBaru);
                         System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !"); 
                     }
@@ -76,10 +74,10 @@ public class MainMenu {
         // TODO: handle generate nota
         System.out.print("Masukan ID member:\n");
         String checkID = input.nextLine();
-        boolean check = true;
+        boolean idFound = false;
         for (Member i : memberList) {
             if (i.getId().equals(checkID)) {
-                check = true;
+                idFound = true;
                 // variabel yang berisi string kosong untuk mempersiapkan hasil dari input paket dan awal
                 String paket = "";
                 String awal = "";
@@ -122,11 +120,9 @@ public class MainMenu {
 
                 System.out.println(notaBaru.getNota());
                 break;
-            } else {
-                check = false;
             }
         }
-        if (check == false) {
+        if (!idFound) {
             System.out.println("Member dengan ID " + checkID + " tidak ditemukan!");
         }
 
@@ -151,16 +147,15 @@ public class MainMenu {
     private static void handleListUser() {
         // TODO: handle list semua user pada sistem
         System.out.println("Terdaftar " +memberList.size()+ " member dalam sistem.");
-        for (int i = 0; i < memberList.size();i++) {
-            System.out.println("- " +memberList.get(i).getId()+ " : " + memberList.get(i).getNama());
+        for (Member i : memberList) {
+            System.out.println("- " +i.getId()+ " : " + i.getNama());
         }
     }
 
     private static void handleAmbilCucian() {
         // TODO: handle ambil cucian
-        boolean check = true;
-        boolean check2 = true;
-        Object removeNota = new Object();
+        boolean idNotaFound = false;
+        Nota removeNota = null;
         int removeIdNota = 0;
         System.out.print("Masukan ID nota yang akan diambil:\n");
         String checkIdNotaString = input.nextLine();
@@ -169,26 +164,25 @@ public class MainMenu {
             checkIdNotaString = input.nextLine();
         }
         int checkIdNotaInt = Integer.parseInt(checkIdNotaString);
+
         for (Nota i : notaList) {
             if (i.getIdNota() == checkIdNotaInt) {
                 //lakukan checkout ngecek udah beres blm lewat tanggal
-                if (i.getIsReady() == false) {
-                    System.out.println("Nota dengan ID " +i.getIdNota()+ " gagal diambil!");
-
-                } else if (i.getIsReady() == true)
-                    check = false;
+                if (i.getIsReady()) {
+                    idNotaFound = true;
                     removeNota = i;
                     removeIdNota = i.getIdNota();
-                break;
-            } else {
-                check2 = false;
+                    break;
+                } else {
+                    System.out.println("Nota dengan ID " +i.getIdNota()+ " gagal diambil!");
+                    return;
+                }
             }
         }
-        if (check == false) {
+        if (idNotaFound) {
             notaList.remove(removeNota);
             System.out.println("Nota dengan ID " +removeIdNota+ " berhasil diambil!");
-        }
-        if (check2 == false) {
+        } else {
             System.out.println("Nota dengan ID " +checkIdNotaInt+ " tidak ditemukan!");
         }
     }
@@ -204,7 +198,6 @@ public class MainMenu {
         }
         System.out.println("Dek Depe tidur hari ini... zzz...");
         for (Nota i : notaList) {
-            System.out.println(i.getIsReady());
             if (i.getIsReady()){
                 System.out.println("Laundry dengan nota ID " +i.getIdNota()+ " sudah dapat diambil!");
             }

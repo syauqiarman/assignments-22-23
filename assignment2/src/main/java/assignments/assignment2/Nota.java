@@ -1,6 +1,5 @@
 package assignments.assignment2;
 
-import assignments.assignment1.NotaGenerator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -59,7 +58,7 @@ public class Nota {
     }
 
     public String getNota() {
-        return (generateNota(checkID, paket, berat, tanggalMasuk, member)) ;
+        return (generateNota(checkID, paket, berat, tanggalMasuk, member));
     }
 
     public int getIdNota() {
@@ -163,7 +162,7 @@ public class Nota {
             +"\nHarga :\n"+ berat 
             +" kg x "+ biaya 
             +" = "+ total + 
-            "(Discount member 50%!!!)\nTanggal Terima  : "+ tanggalTerima 
+            " (Discount member 50%!!!)\nTanggal Terima  : "+ tanggalTerima 
             +"\nTanggal Selesai : " + tanggalSelesai + 
             "\nStatus      	: Belum bisa diambil :(");
             
