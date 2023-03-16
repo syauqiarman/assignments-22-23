@@ -1,5 +1,6 @@
-package assignments.assignment2;
+package assignments.assignment2;    //package assignment 2
 
+//import yang diperlukan
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,87 +26,87 @@ public class Nota {
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
-    public String getCheckID() {
+    public String getCheckID() {    //getter untuk checkID
         return checkID;
     }
 
-    public void setCheckID(String checkID) {
+    public void setCheckID(String checkID) {    //setter untuk checkId
         this.checkID = checkID;
     }
 
-    public String getPaket() {
+    public String getPaket() {  //getter untuk paket
         return paket;
     }
 
-    public void setPaket(String paket) {
+    public void setPaket(String paket) {    //setter untuk paket
         this.paket = paket;
     }
 
-    public int getBerat() {
+    public int getBerat() { //getter untuk berat
         return berat;
     }
 
-    public void setBerat(Integer berat) {
+    public void setBerat(Integer berat) {   //setter untuk berat
         this.berat = berat;
     }
 
-    public String getTanggalMasuk() {
+    public String getTanggalMasuk() {   //getter untuk tanggal masuk
         return tanggalMasuk;
     }
 
-    public void setTanggalMasuk(String tanggalMasuk) {
+    public void setTanggalMasuk(String tanggalMasuk) {  //setter untuk tanggal masuk
         this.tanggalMasuk = tanggalMasuk;
     }
 
-    public String getNota() {
+    public String getNota() {   //getter untuk generateNota
         return (generateNota(checkID, paket, berat, tanggalMasuk, member));
     }
 
-    public int getIdNota() {
+    public int getIdNota() {    //getter untuk IdNota
         return idNota;
     }
 
-    public void setIdNota(Integer idNota) {
+    public void setIdNota(Integer idNota) { //setter untuk idNota
         this.idNota = idNota;
         tempIdNota = idNota;
     }
 
-    public int getSisaHariPengerjaan() {
+    public int getSisaHariPengerjaan() {    //getter untuk sisa hari pengerjaan
         return sisaHariPengerjaan;
     }
 
-    public void setSisaHariPengerjaan() {
+    public void setSisaHariPengerjaan() {   //setter untuk sisa hari pengerjaan sesuai paketnya
         // kondisi jika parameter paket isinya "express"
-        if (paket.equals("express")) {
+        if (paket.equalsIgnoreCase("express")) {
             sisaHariPengerjaan = 1;
         // kondisi jika parameter paket isinya "fast"
-        } else if (paket.equals("fast")) {
+        } else if (paket.equalsIgnoreCase("fast")) {
             sisaHariPengerjaan = 2;
         // kondisi jika parameter paket isinya "reguler"
-        } else if (paket.equals("reguler")) {
+        } else if (paket.equalsIgnoreCase("reguler")) {
             sisaHariPengerjaan = 3;
         }
     }
 
-    public void kurangSisaHariPengerjaan () {
+    public void kurangSisaHariPengerjaan () {   //pengurangan terhadap sisa hari pengerjaan
         this.sisaHariPengerjaan -= 1;
     }
 
-    public void checkSisaHariPengerjaan () {
+    public void checkSisaHariPengerjaan () {    //pengecekan untuk sisa hari pengerjaan
         if (sisaHariPengerjaan <= 0) {
             this.isReady = true;
         }
     }
     
-    public Member getMember() {
+    public Member getMember() { //getter untuk member
         return member;
     }
 
-    public boolean getIsReady() {
+    public boolean getIsReady() {   //getter untuk boolean IsReady
         return isReady;
     }
 
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima, Member member){
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, Member member){ //method untuk generate notanya
         // TODO: Implement generate nota sesuai soal.
         
         // jika parameter berat yang masuk <2 maka masuk sini
@@ -126,19 +127,19 @@ public class Nota {
         LocalDate cekFormat = LocalDate.parse(tanggalTerima, formatTanggal);
 
         // kondisi jika parameter paket isinya "express"
-        if (paket.equals("express")) {
+        if (paket.equalsIgnoreCase("express")) {
             LocalDate durasiExpress = cekFormat.plusDays(1);    // menambah 1 hari
             tanggalSelesai = durasiExpress.format(formatTanggal);   // menyesuaikan formatnya
             biaya = 12000;  // biaya yang diperlukan
         
         // kondisi jika parameter paket isinya "fast"
-        } else if (paket.equals("fast")) {
+        } else if (paket.equalsIgnoreCase("fast")) {
             LocalDate durasiFast = cekFormat.plusDays(2);   // menambah 2 hari
             tanggalSelesai = durasiFast.format(formatTanggal);  // menyesuaikan formatnya
             biaya = 10000;  // biaya yang diperlukan
 
         // kondisi jika parameter paket isinya "reguler"
-        } else if (paket.equals("reguler")) {
+        } else if (paket.equalsIgnoreCase("reguler")) {
             LocalDate durasiReguler = cekFormat.plusDays(3); // menambah 3 hari
             tanggalSelesai = durasiReguler.format(formatTanggal);   // menyesuaikan formatnya
             biaya = 7000;   // biaya yang diperlukan
@@ -152,11 +153,11 @@ public class Nota {
         
         System.out.println("Berhasil menambahkan nota!");
         
-        System.out.println("[ID Nota = " +tempIdNota+ "]");
+        System.out.println("[ID Nota = " +tempIdNota+ "]"); //keluaran nomor notanya
         
         // mereturn format dari keluaran nota
-        if (member.getBonusCounter() == 3) {
-            member.resetBonusCounter();
+        if (member.getBonusCounter() == 3) {    //jika bonuscounternya yaitu 3, maka akan dapat diskon
+            member.resetBonusCounter(); //bonuscounter akan di reset
             return ("ID    : "+ id 
             +"\nPaket : "+ paket 
             +"\nHarga :\n"+ berat 
@@ -166,7 +167,7 @@ public class Nota {
             +"\nTanggal Selesai : " + tanggalSelesai + 
             "\nStatus      	: Belum bisa diambil :(");
             
-        } else {
+        } else {    //selain itu harga normal
             return ("ID    : "+ id 
             +"\nPaket : "+ paket 
             +"\nHarga :\n"+ berat 
