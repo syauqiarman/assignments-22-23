@@ -100,7 +100,7 @@ public class MainMenu {
                     
                     //kondisi jika paket tidak diketahui dan akan me loop kembali
                     } else {    
-                        System.out.println("Paket " + paket + " tidak diketahui [ketik ? untuk mencari tahu jenis paket]");
+                        System.out.println("Paket " + paket + " tidak diketahui\n[ketik ? untuk mencari tahu jenis paket]");
                     }  
                 }
                 
@@ -156,7 +156,6 @@ public class MainMenu {
         // TODO: handle ambil cucian
         boolean idNotaFound = false;    //set boolean untuk mengecek sudah ada atau belum idNota yang dimasukkan
         Nota removeNota = null; //nota kosong untuk mengambil salah satu nota saat diiterasi
-        int removeIdNota = 0;   //untuk mempersiapkan keluaran yang dibutuhkan
         System.out.print("Masukan ID nota yang akan diambil:\n");
         String checkIdNotaString = input.nextLine();    //memasukkan input ke variabel checkIdNotaString
 
@@ -174,19 +173,18 @@ public class MainMenu {
                 if (i.getIsReady()) {   //jika nota sudah selesai, bernilai true
                     idNotaFound = true; //set idNotaFound jadi true
                     removeNota = i; //notaList ke i akan dimasukkan ke variabel removeNota
-                    removeIdNota = i.getIdNota();   //mengambil id notanya
                     break;  //menghentikan loop
                 } else {
-                    System.out.println("Nota dengan ID " +i.getIdNota()+ " gagal diambil!");    //keluaran jika nota belum selesai
+                    System.out.println("Nota dengan ID " +checkIdNotaString+ " gagal diambil!");    //keluaran jika nota belum selesai
                     return; //keluar loop
                 }
             }
         }
         if (idNotaFound) {  //kalau idNotaFound nya true, berarti nota sudah siap untuk di ambil
             notaList.remove(removeNota);    //pengambilan nota dengan meremovenya dari notaList
-            System.out.println("Nota dengan ID " +removeIdNota+ " berhasil diambil!");
+            System.out.println("Nota dengan ID " +checkIdNotaString+ " berhasil diambil!");
         } else {    //jika id nota tidak ada dalam notaList
-            System.out.println("Nota dengan ID " +checkIdNotaInt+ " tidak ditemukan!");
+            System.out.println("Nota dengan ID " +checkIdNotaString+ " tidak ditemukan!");
         }
     }
 
@@ -220,5 +218,4 @@ public class MainMenu {
         System.out.println("[6] Next Day");
         System.out.println("[0] Exit");
     }
-
 }

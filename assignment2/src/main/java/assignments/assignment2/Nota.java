@@ -116,8 +116,8 @@ public class Nota {
         }
 
         //  variable yang berisi 0 untuk mempersiapkan hasil dari perhitungan
-        int biaya = 0;
-        int total = 0;
+        long biaya = 0;
+        long total = 0;
         // variabel kosong untuk mempersiapkan hasil dari operasi tanggal
         String tanggalSelesai = "";
 
