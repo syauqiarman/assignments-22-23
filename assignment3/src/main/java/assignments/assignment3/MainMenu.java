@@ -75,7 +75,7 @@ public class MainMenu {
             System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
             return;
         }
-        System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
+        System.out.printf("Berhasil membuat user dengan ID %s!\n\n", registeredMember.getId());
     }
 
     /**

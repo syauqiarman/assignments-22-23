@@ -74,7 +74,7 @@ public class Nota {
     public String kerjakan(){
         // TODO
         for(LaundryService service : services) {
-            if(service != null) {
+            if(service != null  && service.isDone()==false) {
                 return service.doWork();
             }
         }
@@ -104,14 +104,11 @@ public class Nota {
 
     public String getNotaStatus(){
         // TODO
-        for(LaundryService service : services) {
-            if (service.isDone()) {
-                return "Nota " + this.id + " : Sudah selesai.";
-            } else {
-                return "Nota " + this.id + " : Belum selesai.";
-            }
+        if (isDone) {
+            return "Nota " + this.id + " : Sudah selesai.";
+        } else {
+            return "Nota " + this.id + " : Belum selesai.";
         }
-        return "";
     }
 
     public void addArray(LaundryService service) {

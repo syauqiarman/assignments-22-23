@@ -31,7 +31,6 @@ public class MemberSystem extends SystemCLI {
                 break;
             case 3 :
                 logout = true;
-                System.out.println("Logout successful!");
                 break;
             default:
                 System.out.println("Invalid choice, please try again.");    //gatau pesannya apa
@@ -128,7 +127,7 @@ public class MemberSystem extends SystemCLI {
             for (LaundryService service : nota.getServices()) {
                 System.out.println("-" + service.getServiceName() + " @ Rp." + service.getHarga(nota.getBerat()));
             }
-            System.out.println("Harga Akhir: " + nota.calculateHarga());
+            System.out.println("Harga Akhir: " + nota.calculateHarga() + "\n");
             
         }
     }

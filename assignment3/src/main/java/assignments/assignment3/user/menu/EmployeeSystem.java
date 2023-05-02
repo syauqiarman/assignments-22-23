@@ -36,7 +36,7 @@ public class EmployeeSystem extends SystemCLI {
                 employeeKerja();
                 break;
             case 2:
-                // sementara [intinya panggil method] displayNotaList();
+                displayNotaList();
                 break;
             case 3:
                 logout = true;
@@ -62,8 +62,13 @@ public class EmployeeSystem extends SystemCLI {
     private void employeeKerja () {
         System.out.println("Stand back! Depram beginning to nyuci!");
         for (Nota nota : notaList) {
-            System.out.println(nota.kerjakan());
-            
+            System.out.println("Nota : " + nota.getIdNota() + " : " + nota.kerjakan());
+        }
+    }
+
+    private void displayNotaList() {
+        for (Nota nota : notaList) {
+            System.out.println(nota.getNotaStatus());
         }
     }
 }
