@@ -31,6 +31,13 @@ public class Member {
      */
     public void addNota(Nota nota) {
         // TODO
+        Nota[] newNotalist = new Nota[notaList.length + 1]; //membuat array baru yang panjangnya ditambah 1
+        for (int i = 0; i < notaList.length; i++) {  //mengcopy isi dari array notaList ke array yg baru
+            newNotalist[i] = notaList[i];
+        }
+        newNotalist[notaList.length] = nota;  //mengisi index array yang terakhir dengan objek yang baru ditambahkan
+        notaList = newNotalist; //mengupdate isi dari array notaList dengan isi dari array baru
+        
     }
 
     /**
@@ -41,6 +48,9 @@ public class Member {
      */
     protected boolean authenticate(String password) {
         // TODO
+        if (this.password.equals(password)) {
+            return true;
+        }
         return false;
     }
 

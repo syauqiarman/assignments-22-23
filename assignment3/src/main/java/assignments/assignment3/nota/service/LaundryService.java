@@ -1,5 +1,7 @@
 package assignments.assignment3.nota.service;
 
+import assignments.assignment3.nota.Nota;
+
 public interface LaundryService {
     /**
      * Akan mengembalikan String yang menandakan bahwa Nota tersebut sedang dikerjakan.
