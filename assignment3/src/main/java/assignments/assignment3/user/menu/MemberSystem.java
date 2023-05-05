@@ -111,7 +111,6 @@ public class MemberSystem extends SystemCLI {
     }
 
     private void displayNota () {
-        //Member member = (Member) loginMember;
         for (Nota nota : loginMember.getNotaList()) {
             System.out.println(nota); 
         }

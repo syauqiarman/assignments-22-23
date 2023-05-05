@@ -95,9 +95,9 @@ public class Nota {
     public void toNextDay() {
         // TODO
         this.sisaHariPengerjaan--;
-        if (this.sisaHariPengerjaan <= 0) {
+        if (this.sisaHariPengerjaan < 0) {
             if (!isDone) {
-                totalKompensasi = (this.sisaHariPengerjaan - 1) * (-1) * 2000;
+                totalKompensasi = (this.sisaHariPengerjaan) * (-1) * 2000;
                 telat = true;
             }
         }
@@ -137,9 +137,6 @@ public class Nota {
     @Override
     public String toString(){
         // TODO
-        // for (LaundryService service : this.services) {
-        //     outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
-        // }
         if (telat) {
             return ("[ID Nota = " + this.id + "]\n"
             + "ID    : " + this.member.getId()
@@ -150,7 +147,7 @@ public class Nota {
             + "\ntanggal selesai : " + this.tanggalSelesai
             + "\n--- SERVICE LIST ---\n"
             + this.outputService
-            + "Harga Akhir: " + calculateHarga() + " Ada kompensasi keterlambatan " + (this. sisaHariPengerjaan - 1) * (-1) + " * 2000 hari\n");
+            + "Harga Akhir: " + calculateHarga() + " Ada kompensasi keterlambatan " + (this. sisaHariPengerjaan) * (-1) + " * 2000 hari\n");
         } else {
             return ("[ID Nota = " + this.id + "]\n"
             + "ID    : " + this.member.getId()
