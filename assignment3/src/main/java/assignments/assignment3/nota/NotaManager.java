@@ -17,7 +17,6 @@ public class NotaManager {
         for (Nota nota : notaList) {
             nota.toNextDay();
         }
-        System.out.println("Kamu tidur hari ini... zzz...");
     }
 
     /**

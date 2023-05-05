@@ -14,6 +14,7 @@ public class Nota {
     private String paket;
     private LaundryService[] services  = new LaundryService[0];
     private long baseHarga;
+    private long totalHarga;
     private int sisaHariPengerjaan;
     private  int berat;
     private int id;
@@ -22,6 +23,8 @@ public class Nota {
     private boolean isDone;
     private long totalKompensasi;
     static public int totalNota;
+    private boolean telat;
+    private String outputService= "";
 
     public Nota(Member member, int berat, String paket, String tanggal) {
         //TODO
@@ -55,45 +58,59 @@ public class Nota {
 
     public void addService(LaundryService service){
         //TODO
-        // for (int i = 0; i < services.length; i++) {
-        //     if (services[i] == null) {
-        //         services[i] = service;
-        //         break;
-        //     }
-        // }
-        addArray(service);
-        // if (service.getServiceName().equals("Cuci")) {
-        //     addArray(service);
-        // } else if (service.getServiceName().equals("Antar")) {
-        //     addArray(service);
-        // } else if (service.getServiceName().equals("Setrika")) {
-        //     services[3] = service;
-        // }
+        LaundryService[] newServiceList = new LaundryService[services.length + 1]; //membuat array baru yang panjangnya ditambah 1
+        for (int i = 0; i < services.length; i++) {  //mengcopy isi dari array notaList ke array yg baru
+            newServiceList[i] = services[i];
+        }
+        newServiceList[services.length] = service;  //mengisi index array yang terakhir dengan objek yang baru ditambahkan
+        services = newServiceList; //mengupdate isi dari array notaList dengan isi dari array baru
     }
 
     public String kerjakan(){
         // TODO
         for(LaundryService service : services) {
             if(service != null  && service.isDone()==false) {
-                return service.doWork();
+                String a = service.doWork();
+                check();
+                return "Nota " + this.id + " : " + a;
             }
         }
         this.isDone = true;
-        return "Sudah selesai.";
+        return "Nota " + this.id + " : Sudah selesai.";
     }
+
+    public Boolean check(){
+        for(LaundryService service : services) {
+            if(service.isDone()){
+                continue;
+            } else {
+                isDone = false;
+                return isDone;
+            }
+        }
+        isDone = true;
+        return isDone;
+    }
+
     public void toNextDay() {
         // TODO
         this.sisaHariPengerjaan--;
         if (this.sisaHariPengerjaan <= 0) {
             if (!isDone) {
-                totalKompensasi = this.sisaHariPengerjaan * (-1) * 2000;
+                totalKompensasi = (this.sisaHariPengerjaan - 1) * (-1) * 2000;
+                telat = true;
             }
         }
     }
 
     public long calculateHarga(){
         // TODO
-        long totalHarga = this.baseHarga *this.berat;
+        if (telat) {
+            totalHarga = (this.baseHarga * this.berat) - totalKompensasi;
+        } else {
+            totalHarga = this.baseHarga * this.berat;
+        }
+        
         for (LaundryService service : services) {
             if (service != null) {
                 totalHarga += service.getHarga(this.berat);
@@ -111,20 +128,41 @@ public class Nota {
         }
     }
 
-    public void addArray(LaundryService service) {
-        // TODO
-        LaundryService[] newServiceList = new LaundryService[services.length + 1]; //membuat array baru yang panjangnya ditambah 1
-        for (int i = 0; i < services.length; i++) {  //mengcopy isi dari array notaList ke array yg baru
-            newServiceList[i] = services[i];
+    public void allService() {
+        for (LaundryService service : this.services) {
+            outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
         }
-        newServiceList[services.length] = service;  //mengisi index array yang terakhir dengan objek yang baru ditambahkan
-        services = newServiceList; //mengupdate isi dari array notaList dengan isi dari array baru
     }
 
     @Override
     public String toString(){
         // TODO
-        return "";
+        // for (LaundryService service : this.services) {
+        //     outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
+        // }
+        if (telat) {
+            return ("[ID Nota = " + this.id + "]\n"
+            + "ID    : " + this.member.getId()
+            + "\nPaket : " + this.paket
+            + "\nHarga : \n" 
+            + this.berat + "kg x " + this.baseHarga + " = " + (this.berat * this.baseHarga)
+            + "\ntanggal terima  : " + this.tanggalMasuk
+            + "\ntanggal selesai : " + this.tanggalSelesai
+            + "\n--- SERVICE LIST ---\n"
+            + this.outputService
+            + "Harga Akhir: " + calculateHarga() + " Ada kompensasi keterlambatan " + (this. sisaHariPengerjaan - 1) * (-1) + " * 2000 hari\n");
+        } else {
+            return ("[ID Nota = " + this.id + "]\n"
+            + "ID    : " + this.member.getId()
+            + "\nPaket : " + this.paket
+            + "\nHarga : \n" 
+            + this.berat + "kg x " + this.baseHarga + " = " + (this.berat * this.baseHarga)
+            + "\ntanggal terima  : " + this.tanggalMasuk
+            + "\ntanggal selesai : " + this.tanggalSelesai
+            + "\n--- SERVICE LIST ---\n"
+            + this.outputService
+            + "Harga Akhir: " + calculateHarga() + "\n");
+        }
     }
 
     // Dibawah ini adalah getter
@@ -137,7 +175,7 @@ public class Nota {
         return berat;
     }
 
-    public String getTanggalMasuk() {
+    public String getTanggal() {
         return tanggalMasuk;
     }
 

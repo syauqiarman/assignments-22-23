@@ -62,7 +62,7 @@ public class EmployeeSystem extends SystemCLI {
     private void employeeKerja () {
         System.out.println("Stand back! Depram beginning to nyuci!");
         for (Nota nota : notaList) {
-            System.out.println("Nota : " + nota.getIdNota() + " : " + nota.kerjakan());
+            System.out.println(nota.kerjakan());
         }
     }
 
