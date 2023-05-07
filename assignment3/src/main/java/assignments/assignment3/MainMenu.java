@@ -44,7 +44,7 @@ public class MainMenu {
                 case 2 -> register();
                 case 3 -> toNextDay();
                 case 4 -> exit = true;
-                default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
+                default -> System.out.println("Pilihan tidak valid, silakan coba lagi.\n");
             }
         }
 
@@ -64,9 +64,18 @@ public class MainMenu {
      */
     void register() {
         System.out.println("Masukan nama Anda: ");
-        String nama = in.nextLine();
+        String nama = in.nextLine();    //memasukkan input ke variabel nama
         System.out.println("Masukan nomor handphone Anda: ");
-        String noHp = in.nextLine();
+        String noHp = in.nextLine();    //memasukkan input ke variabel nomorHP
+
+        /*mengecek validasi dari input nomorHP yang telah dilakukan menggunakan while loop
+        while loop akan mengecek satu persatu dari inputan nomorHP, yang dianggap benar adalah 0 sampai 9
+        lalu di or jika ada spasi di nomorHP maka juga akan meminta input ulang */
+        while (noHp.matches("[0-9]+") != true || noHp.contains(" ")) {
+            System.out.println("Field nomor hp hanya menerima digit");
+            noHp = in.nextLine();
+        }
+
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
 
@@ -88,7 +97,7 @@ public class MainMenu {
         String inputPassword = in.nextLine();
         SystemCLI systemCLI = loginManager.getSystem(inputId);
         if(systemCLI == null){
-            System.out.println("ID atau password invalid.");
+            System.out.println("ID atau password invalid.\n");
             return;
         }
         systemCLI.login(in, inputId, inputPassword);

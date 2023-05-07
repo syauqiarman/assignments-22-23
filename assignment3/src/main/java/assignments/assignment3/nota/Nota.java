@@ -24,7 +24,6 @@ public class Nota {
     private long totalKompensasi;
     static public int totalNota;
     private boolean telat;
-    private String outputService= "";
 
     public Nota(Member member, int berat, String paket, String tanggal) {
         //TODO
@@ -32,6 +31,7 @@ public class Nota {
         this.berat = berat;
         this.paket = paket;
         this.tanggalMasuk = tanggal;
+        this.id = totalNota++;
         addService(new CuciService());
 
         if (paket.equalsIgnoreCase("express")) {
@@ -122,11 +122,11 @@ public class Nota {
         }
     }
 
-    public void allService() {
-        for (LaundryService service : this.services) {
-            outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
-        }
-    }
+    // public void allService() {
+    //     for (LaundryService service : this.services) {
+    //         outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
+    //     }
+    // }
 
     @Override
     public String toString(){
@@ -135,6 +135,12 @@ public class Nota {
         DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         //mengecek kesesuaian format
         LocalDate cekFormat = LocalDate.parse(this.tanggalMasuk, formatTanggal);
+
+        String outputService = "";
+        for (LaundryService service : this.services) {
+            outputService += "-" + service.getServiceName() + " @ Rp." + service.getHarga(this.berat) + "\n";
+        }
+
 
         if (paket.equalsIgnoreCase("express")) {
             LocalDate durasiExpress = cekFormat.plusDays(1);    // menambah 1 hari
@@ -146,7 +152,8 @@ public class Nota {
             LocalDate durasiReguler = cekFormat.plusDays(3); // menambah 3 hari
             tanggalSelesai = durasiReguler.format(formatTanggal);   // menyesuaikan formatnya
         }
-    
+        
+        //this.allService();
         if (telat) {
             return ("[ID Nota = " + this.id + "]\n"
             + "ID    : " + this.member.getId()
@@ -156,7 +163,7 @@ public class Nota {
             + "\ntanggal terima  : " + this.tanggalMasuk
             + "\ntanggal selesai : " + this.tanggalSelesai
             + "\n--- SERVICE LIST ---\n"
-            + this.outputService
+            + outputService
             + "Harga Akhir: " + calculateHarga() + " Ada kompensasi keterlambatan " + (this. sisaHariPengerjaan) * (-1) + " * 2000 hari\n");
         } else {
             return ("[ID Nota = " + this.id + "]\n"
@@ -167,7 +174,7 @@ public class Nota {
             + "\ntanggal terima  : " + this.tanggalMasuk
             + "\ntanggal selesai : " + this.tanggalSelesai
             + "\n--- SERVICE LIST ---\n"
-            + this.outputService
+            + outputService
             + "Harga Akhir: " + calculateHarga() + "\n");
         }
     }

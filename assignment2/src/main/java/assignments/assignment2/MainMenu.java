@@ -41,36 +41,36 @@ public class MainMenu {
     private static void handleGenerateUser() {
         // TODO: handle generate user
         System.out.print("Masukkan nama Anda:\n");
-                String nama = input.nextLine(); //memasukkan input ke variabel nama
-                System.out.print("Masukkan nomor handphone Anda:\n");
-                String nomorHP = input.nextLine();  //memasukkan input ke variabel nomorHP
+        String nama = input.nextLine(); //memasukkan input ke variabel nama
+        System.out.print("Masukkan nomor handphone Anda:\n");
+        String nomorHP = input.nextLine();  //memasukkan input ke variabel nomorHP
 
-                /*mengecek validasi dari input nomorHP yang telah dilakukan menggunakan while loop
-                while loop akan mengecek satu persatu dari inputan nomorHP, yang dianggap benar adalah 0 sampai 9
-                lalu di or jika ada spasi di nomorHP maka juga akan meminta input ulang */
-                while (nomorHP.matches("[0-9]+") != true || nomorHP.contains(" ")) {
-                    System.out.println("Field nomor hp hanya menerima digit");
-                    nomorHP = input.nextLine();
+        /*mengecek validasi dari input nomorHP yang telah dilakukan menggunakan while loop
+        while loop akan mengecek satu persatu dari inputan nomorHP, yang dianggap benar adalah 0 sampai 9
+        lalu di or jika ada spasi di nomorHP maka juga akan meminta input ulang */
+        while (nomorHP.matches("[0-9]+") != true || nomorHP.contains(" ")) {
+            System.out.println("Field nomor hp hanya menerima digit");
+            nomorHP = input.nextLine();
+        }
+        Member memberBaru = new Member(nama, nomorHP);  //membuat member baru
+        
+        if (memberList.size() == 0) {   //jika memberList nya masih kosong akan masuk kesini
+            memberList.add(memberBaru); //menambahkan member baru ke memberList
+            System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");   //keluaran saat berhasil menambahkan member
+        } else {    //jika memberList sudah ada isinya, sizenya minimal 1
+            boolean memberIdFound = false;  //set boolean untuk mengecek sudah ada atau belum id yang dimasukkan
+            for (Member i : memberList) {   //loop memberList satu persatu
+                if (i.getId().equals(memberBaru.getId())) { //jika id yang dimasukkan sudah ada
+                    memberIdFound = true;   //set boolean true karena id sudah digunakan
+                    System.out.println("Member dengan nama " + nama + " dan nomor hp " + nomorHP + " sudah ada!");  //keluarannya
+                    break;  //break agar berhenti looping
                 }
-                Member memberBaru = new Member(nama, nomorHP);  //membuat member baru
-                
-                if (memberList.size() == 0) {   //jika memberList nya masih kosong akan masuk kesini
-                    memberList.add(memberBaru); //menambahkan member baru ke memberList
-                    System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");   //keluaran saat berhasil menambahkan member
-                } else {    //jika memberList sudah ada isinya, sizenya minimal 1
-                    boolean memberIdFound = false;  //set boolean untuk mengecek sudah ada atau belum id yang dimasukkan
-                    for (Member i : memberList) {   //loop memberList satu persatu
-                        if (i.getId().equals(memberBaru.getId())) { //jika id yang dimasukkan sudah ada
-                            memberIdFound = true;   //set boolean true karena id sudah digunakan
-                            System.out.println("Member dengan nama " + nama + " dan nomor hp " + nomorHP + " sudah ada!");  //keluarannya
-                            break;  //break agar berhenti looping
-                        }
-                    }
-                    if (!memberIdFound) {   //jika booleannya false maka artinya id belum terpakai
-                        memberList.add(memberBaru); //menambahkan member baru ke memberList
-                        System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");   //keluaran saat berhasil menambahkan member
-                    }
-                }
+            }
+            if (!memberIdFound) {   //jika booleannya false maka artinya id belum terpakai
+                memberList.add(memberBaru); //menambahkan member baru ke memberList
+                System.out.println("Berhasil membuat member dengan ID " + memberBaru.getId() + " !");   //keluaran saat berhasil menambahkan member
+            }
+        }
     }
 
     private static void handleGenerateNota() {
