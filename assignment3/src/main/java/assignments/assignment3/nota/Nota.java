@@ -32,27 +32,17 @@ public class Nota {
         this.berat = berat;
         this.paket = paket;
         this.tanggalMasuk = tanggal;
-
-        // memformat masukan tanggal
-        DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        //mengecek kesesuaian format
-        LocalDate cekFormat = LocalDate.parse(this.tanggalMasuk, formatTanggal);
+        addService(new CuciService());
 
         if (paket.equalsIgnoreCase("express")) {
             this.baseHarga = 12000;
             this.sisaHariPengerjaan = 1;
-            LocalDate durasiExpress = cekFormat.plusDays(1);    // menambah 1 hari
-            tanggalSelesai = durasiExpress.format(formatTanggal);
         } else if (paket.equalsIgnoreCase("fast")) {
             this.baseHarga = 10000;
             this.sisaHariPengerjaan = 2;
-            LocalDate durasiFast = cekFormat.plusDays(2);   // menambah 2 hari
-            tanggalSelesai = durasiFast.format(formatTanggal);  // menyesuaikan formatnya
         } else if (paket.equalsIgnoreCase("reguler")) {
             this.baseHarga = 7000;
             this.sisaHariPengerjaan = 3;
-            LocalDate durasiReguler = cekFormat.plusDays(3); // menambah 3 hari
-            tanggalSelesai = durasiReguler.format(formatTanggal);   // menyesuaikan formatnya
         }
     }
 
@@ -110,6 +100,10 @@ public class Nota {
         } else {
             totalHarga = this.baseHarga * this.berat;
         }
+
+        if (totalHarga < 0){
+            totalHarga = 0;
+        }
         
         for (LaundryService service : services) {
             if (service != null) {
@@ -137,6 +131,22 @@ public class Nota {
     @Override
     public String toString(){
         // TODO
+        // memformat masukan tanggal
+        DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //mengecek kesesuaian format
+        LocalDate cekFormat = LocalDate.parse(this.tanggalMasuk, formatTanggal);
+
+        if (paket.equalsIgnoreCase("express")) {
+            LocalDate durasiExpress = cekFormat.plusDays(1);    // menambah 1 hari
+            tanggalSelesai = durasiExpress.format(formatTanggal);
+        } else if (paket.equalsIgnoreCase("fast")) {
+            LocalDate durasiFast = cekFormat.plusDays(2);   // menambah 2 hari
+            tanggalSelesai = durasiFast.format(formatTanggal);  // menyesuaikan formatnya
+        } else if (paket.equalsIgnoreCase("reguler")) {
+            LocalDate durasiReguler = cekFormat.plusDays(3); // menambah 3 hari
+            tanggalSelesai = durasiReguler.format(formatTanggal);   // menyesuaikan formatnya
+        }
+    
         if (telat) {
             return ("[ID Nota = " + this.id + "]\n"
             + "ID    : " + this.member.getId()

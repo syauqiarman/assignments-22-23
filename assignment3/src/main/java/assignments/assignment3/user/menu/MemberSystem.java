@@ -84,8 +84,8 @@ public class MemberSystem extends SystemCLI {
         idNotaCounter++;
         ((Member)loginMember).addNota(notaBaru);
         NotaManager.addNota(notaBaru);
-        LaundryService cuci = new CuciService();
-        notaBaru.addService(cuci);
+        //LaundryService cuci = new CuciService();
+        //notaBaru.addService(cuci);
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
         System.out.println("Hanya tambah 1000 / kg :0");
         System.out.print("[Ketik x untuk tidak mau]: ");

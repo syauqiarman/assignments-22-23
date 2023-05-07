@@ -40,7 +40,6 @@ public class EmployeeSystem extends SystemCLI {
                 break;
             case 3:
                 logout = true;
-                System.out.println("Logout successful!");
                 break;
             default:
                 System.out.println("Invalid choice, please try again.");    //ngga tau apa pesannya
@@ -60,7 +59,7 @@ public class EmployeeSystem extends SystemCLI {
     }
 
     private void employeeKerja () {
-        System.out.println("Stand back! Depram beginning to nyuci!");
+        System.out.println("Stand back!" + loginMember.getNama() + "beginning to nyuci!");
         for (Nota nota : notaList) {
             System.out.println(nota.kerjakan());
         }
