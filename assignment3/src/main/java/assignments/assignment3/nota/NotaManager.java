@@ -1,12 +1,13 @@
-package assignments.assignment3.nota;
+package assignments.assignment3.nota;   //package assignment3.nota
 
+//import yang diperlukan
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NotaManager {
-    public static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-    public static Calendar cal = Calendar.getInstance();
-    static public Nota[] notaList = new Nota[0];
+    public static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");    // memformat masukan tanggal
+    public static Calendar cal = Calendar.getInstance();    //calendar
+    static public Nota[] notaList = new Nota[0];    //membuat array notaList untuk menyimpan nota keseluruhan
 
     /**
      * Skips ke hari berikutnya dan update semua entri nota yang sesuai.
@@ -14,7 +15,7 @@ public class NotaManager {
     public static void toNextDay(){
         //TODO: implement skip hari
         cal.add(Calendar.DATE, 1);    // menambah 1 hari
-        for (Nota nota : notaList) {
+        for (Nota nota : notaList) {    //melakukan nextDay untuk setiap nota
             nota.toNextDay();
         }
     }

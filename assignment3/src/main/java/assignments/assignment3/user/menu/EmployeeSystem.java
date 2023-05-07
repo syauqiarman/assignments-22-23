@@ -1,9 +1,9 @@
-package assignments.assignment3.user.menu;
+package assignments.assignment3.user.menu;  //package assignment3.user.menu
 
+//import yang diperlukan
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
-
 import static assignments.assignment3.nota.NotaManager.notaList;
 
 public class EmployeeSystem extends SystemCLI {
@@ -27,25 +27,24 @@ public class EmployeeSystem extends SystemCLI {
      * @return true jika user log.
      */
     @Override
-    protected boolean processChoice(int choice) {
+    protected boolean processChoice(int choice) { 
         boolean logout = false;
         // TODO:
         switch (choice) {
-            case 1:
-                // sementara [intinya panggil method] nyuciMenu();
+            case 1: //jika choicenya 1 akan memanggil method employeeKerja
                 employeeKerja();
                 break;
-            case 2:
+            case 2: //jika choicenya 2 akan memanggil method displayNotaList
                 displayNotaList();
                 break;
-            case 3:
+            case 3: //jika choicenya 3 akan mengubah logout menjadi true dan akan keluar loop
                 logout = true;
                 break;
             default:
-                System.out.println("Invalid choice, please try again.");    //ngga tau apa pesannya
+                System.out.println("Invalid choice, please try again.");    //selain choice diatas akan looping lagi
                 break;
         }
-        return logout;
+        return logout;  //mengembalikan logout
     }
 
     /**
@@ -58,14 +57,14 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("3. Logout");
     }
 
-    private void employeeKerja () {
+    private void employeeKerja () { //method untuk employee melakukan kerja nya
         System.out.println("Stand back! " + loginMember.getNama() + " beginning to nyuci!");
-        for (Nota nota : notaList) {
+        for (Nota nota : notaList) {    //mengerjakan semua nota yang ada sesuai servicenya
             System.out.println(nota.kerjakan());
         }
     }
 
-    private void displayNotaList() {
+    private void displayNotaList() {    //method untuk employee melihat status dari nota yang ada
         for (Nota nota : notaList) {
             System.out.println(nota.getNotaStatus());
         }

@@ -1,4 +1,4 @@
-package assignments.assignment3.user;
+package assignments.assignment3.user;   //package assignment3.user.menu
 
 public class Employee extends Member {
     public static int employeeCount;
@@ -15,10 +15,10 @@ public class Employee extends Member {
      */
     private static String generateId(String nama) {
         // TODO
-        String[] namaPerkata = nama.split(" ");
-        String namaPertama = namaPerkata[0];
-        String id = namaPertama.toUpperCase() + "-" + employeeCount;
-        employeeCount++;
-        return id;
+        String[] namaPerkata = nama.split(" "); //nama akan displit perkata
+        String namaPertama = namaPerkata[0];    //proses pengambilan kata pertama untuk dibuatkan id
+        String id = namaPertama.toUpperCase() + "-" + employeeCount;    //pembuatan id employee
+        employeeCount++;    //increment counter untuk pendaftaran employee selanjutnya
+        return id;  //mengembalikan id yang sudah dibuat
     }
 }

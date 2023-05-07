@@ -1,5 +1,6 @@
-package assignments.assignment3;
+package assignments.assignment3;    //package assignment 3
 
+//import yang diperlukan
 import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -22,10 +23,10 @@ public class LoginManager {
      * @return SystemCLI object yang sesuai dengan ID, null if  ID tidak ditemukan.
      */
     public SystemCLI getSystem(String id){
-        if(memberSystem.isMemberExist(id)){
+        if(memberSystem.isMemberExist(id)){ //jika role nya member masuk kesini
             return memberSystem;
         }
-        if(employeeSystem.isMemberExist(id)){
+        if(employeeSystem.isMemberExist(id)){   //jika role nya employee masuk kesini
             return employeeSystem;
         }
         return null;
@@ -41,12 +42,12 @@ public class LoginManager {
      */
     public Member register(String nama, String noHp, String password) {
         // TODO
-        String tempId = NotaGenerator.generateId(nama, noHp);
-        if(!memberSystem.isMemberExist(tempId)) {
-            Member memberBaru = new Member(nama, tempId, password);
-            memberSystem.addMember(memberBaru);
-            return memberBaru;
+        String tempId = NotaGenerator.generateId(nama, noHp);   //pembuatan Id dengan memanggil generateId yang ada di TP1
+        if(!memberSystem.isMemberExist(tempId)) {   //pengecekan apakah member sudah ada atau belum
+            Member memberBaru = new Member(nama, tempId, password); //membuat member baru
+            memberSystem.addMember(memberBaru); //menambahkan member ke dalam array memberList dengan memanggil method addMember di memberSystem
+            return memberBaru;  //mengembalikan memberBaru
         }
-        return null;
+        return null;    //jika member sudah ada maka akan mengembalikan null
     }
 }

@@ -1,9 +1,10 @@
-package assignments.assignment3.user.menu;
+package assignments.assignment3.user.menu;  //package assignment3.user.menu
+
+//import yang diperlukan
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.nota.service.AntarService;
-import assignments.assignment3.nota.service.CuciService;
 import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.nota.service.SetrikaService;
 import assignments.assignment1.NotaGenerator;
@@ -24,20 +25,20 @@ public class MemberSystem extends SystemCLI {
         boolean logout = false;
         // TODO
         switch (choice) {
-            case 1 :
+            case 1 :    //jika choicenya 1 akan memanggil method generateNota
                 generateNota();
                 break;
-            case 2 :
+            case 2 :    //jika choicenya 2 akan memanggil method displayNota
                 displayNota();
                 break;
-            case 3 :
+            case 3 :    //jika choicenya 3 akan mengubah logout menjadi true dan akan keluar loop
                 logout = true;
                 break;
             default:
-                System.out.println("Invalid choice, please try again.");    //gatau pesannya apa
+                System.out.println("Invalid choice, please try again.");    //selain choice diatas akan looping lagi
                 break;
         }
-        return logout;
+        return logout;  //mengembalikan logout
     }
 
     /**
@@ -101,43 +102,39 @@ public class MemberSystem extends SystemCLI {
         }
         int berat = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
 
-        if (berat < 2) {
+        if (berat < 2) {    //jika berat kurang dari 2
             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-            berat = 2;  //berat akan diubah menjadi 2
+            berat = 2;  //berat diubah menjadi 2
         }
 
-        Nota notaBaru = new Nota(loginMember, berat, paket, fmt.format(cal.getTime()));
-        //notaBaru.setIdNota(idNotaCounter);
-        //idNotaCounter++;
-        ((Member)loginMember).addNota(notaBaru);
-        NotaManager.addNota(notaBaru);
-        //LaundryService cuci = new CuciService();
-        //notaBaru.addService(cuci);
+        Nota notaBaru = new Nota(loginMember, berat, paket, fmt.format(cal.getTime())); //membuat nota baru
+        ((Member)loginMember).addNota(notaBaru);    //menambahkan nota ke array notaList di Member yang sifatnya perorangan
+        NotaManager.addNota(notaBaru);  //menambahkan nota ke array notaList di NotaManager yang sifatnya keseluruhan
+
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
         System.out.println("Hanya tambah 1000 / kg :0");
         System.out.print("[Ketik x untuk tidak mau]: ");
-        String pilihanSetrika = in.nextLine();
+        String pilihanSetrika = in.nextLine();  // memasukkan input ke variabel pilihanSetrika
 
-        if (!pilihanSetrika.equalsIgnoreCase("x")) {
-            LaundryService setrika = new SetrikaService();
-            notaBaru.addService(setrika);
+        if (!pilihanSetrika.equalsIgnoreCase("x")) {    //jika pilihanSetrika bukan "x" akan masuk kesini
+            LaundryService setrika = new SetrikaService();  //membuat SetrikaService baru
+            notaBaru.addService(setrika);   //menambahkan service setrika ke nota
         }
 
         System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!");
         System.out.println("Cuma 2000 / 4kg, kemudian 500 / kg");
         System.out.print("[Ketik x untuk tidak mau]: ");
-        String pilihanAntar = in.nextLine();
+        String pilihanAntar = in.nextLine();    // memasukkan input ke variabel pilihanAntar
 
-        if (!pilihanAntar.equalsIgnoreCase("x")) {
-            // TODO
-            LaundryService antar = new AntarService();
-            notaBaru.addService(antar);
+        if (!pilihanAntar.equalsIgnoreCase("x")) {  //jika pilihanAntar bukan "x" akan masuk kesini
+            LaundryService antar = new AntarService();  //membuat AntarService baru
+            notaBaru.addService(antar); //menambahkan service antar ke nota
         }
-        //notaBaru.allService();
+
         System.out.println("Nota berhasil dibuat!");
     }
 
-    private void displayNota () {
+    private void displayNota () {   //method untuk member melihat nota miliknya
         for (Nota nota : loginMember.getNotaList()) {
             System.out.println(nota); 
         }

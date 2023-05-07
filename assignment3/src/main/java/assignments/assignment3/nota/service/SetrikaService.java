@@ -1,4 +1,4 @@
-package assignments.assignment3.nota.service;
+package assignments.assignment3.nota.service;   //package assignment3.nota.service
 
 public class SetrikaService implements LaundryService{
     //tambahan
@@ -10,27 +10,27 @@ public class SetrikaService implements LaundryService{
     //sampe sini
 
     @Override
-    public String doWork() {
+    public String doWork() {    //proses pengerjaan
         // TODO
         this.isSetrikaDone = true;
         return "Sedang menyetrika...";
     }
 
     @Override
-    public boolean isDone() {
+    public boolean isDone() {   //nilai isDone
         // TODO
         return this.isSetrikaDone;
     }
 
     @Override
-    public long getHarga(int berat) {
+    public long getHarga(int berat) {   //harga servicenya
         // TODO
-        long biayaSetrika = 1000 * berat;
-        return biayaSetrika;
+        long biayaSetrika = 1000 * berat;   //harga servicenya per kg 1000
+        return biayaSetrika;    //mengembalikan biayaSetrika
     }
 
     @Override
-    public String getServiceName() {
+    public String getServiceName() {    //nama servicenya
         return "Setrika";
     }
 }

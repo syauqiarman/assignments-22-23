@@ -1,11 +1,13 @@
-package assignments.assignment3.user;
+package assignments.assignment3.user;   //package assignment3.user
 
+//import yang diperlukan
 import assignments.assignment3.nota.Nota;
+
 public class Member {
     protected String id;
     protected String password;
     protected String nama;
-    protected Nota[] notaList = new Nota[0];
+    protected Nota[] notaList = new Nota[0];    //membuat array notaList untuk menyimpan nota tiap orang
 
     public Member(String nama, String id, String password) {
         this.nama = nama;
@@ -48,7 +50,7 @@ public class Member {
      */
     protected boolean authenticate(String password) {
         // TODO
-        if (this.password.equals(password)) {
+        if (this.password.equals(password)) {   //jika passwordnya sesuai maka akan me return true
             return true;
         }
         return false;
