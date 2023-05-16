@@ -42,6 +42,7 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
+        setLocationRelativeTo(null);
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
                 memberSystemGUI,

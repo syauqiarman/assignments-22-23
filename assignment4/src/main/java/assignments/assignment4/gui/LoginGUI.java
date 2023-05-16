@@ -4,6 +4,7 @@ import assignments.assignment3.LoginManager;
 import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 import assignments.assignment3.user.menu.SystemCLI;
+import assignments.assignment3.user.Member;
 
 import javax.swing.*;
 import java.awt.*;
@@ -125,7 +126,15 @@ public class LoginGUI extends JPanel {
             JOptionPane.showMessageDialog(this, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
-            MainFrame.getInstance().login(idString, passwordString);    //jika id dan passwordnya sesuai maka akan memanggil method login di SystemCLI
+            Member member = systemCLI.authUser(idString, passwordString);
+            if (member == null) {
+                idTextField.setText("");
+                passwordField.setText("");
+                JOptionPane.showMessageDialog(this, "Invalid ID or Password!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                MainFrame.getInstance().login(idString, passwordString); //jika id dan passwordnya sesuai maka akan memanggil method login di mainframe
+            }
         }
         
     }

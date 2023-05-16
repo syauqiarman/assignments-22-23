@@ -36,8 +36,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
-            new JButton("Show Nota Detail"),
-            new JButton("Create Nota")
+            new JButton("Saya ingin laundry"),
+            new JButton("Lihat detail nota saya")
         };
     }
 
@@ -69,6 +69,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void createNota() {
         // TODO
+        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 
 }
