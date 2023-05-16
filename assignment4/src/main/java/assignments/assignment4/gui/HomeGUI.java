@@ -37,6 +37,64 @@ public class HomeGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
+    // Set up title label
+    titleLabel = new JLabel("Selamat Datang di CuciCuci System!");
+    titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+    titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    gbc.insets = new Insets(0, 0, 10, 0);
+    mainPanel.add(titleLabel, gbc);
+
+    // Set up date label
+    dateLabel = new JLabel("Today is ");
+    dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+    dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    gbc.gridy = 1;
+    mainPanel.add(dateLabel, gbc);
+
+    // Set up register button
+    registerButton = new JButton("Register");
+    registerButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            handleToRegister();
+        }
+    });
+    gbc.gridy = 2;
+    gbc.gridwidth = 1;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.insets = new Insets(20, 0, 0, 5);
+    mainPanel.add(registerButton, gbc);
+
+    // Set up login button
+    loginButton = new JButton("Login");
+    loginButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            handleToLogin();
+        }
+    });
+    gbc.gridx = 1;
+    gbc.insets = new Insets(20, 5, 0, 0);
+    mainPanel.add(loginButton, gbc);
+
+    // Set up toNextDay button
+    toNextDayButton = new JButton("Next Day");
+    toNextDayButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            handleNextDay();
+        }
+    });
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.gridwidth = 2;
+    gbc.insets = new Insets(20, 0, 0, 0);
+    mainPanel.add(toNextDayButton, gbc);
+
     }
 
     /**
@@ -44,6 +102,7 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "registerButton"
      * */
     private static void handleToRegister() {
+        MainFrame.getInstance().navigateTo(RegisterGUI.KEY);
     }
 
     /**
@@ -51,6 +110,7 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "loginButton"
      * */
     private static void handleToLogin() {
+        MainFrame.getInstance().navigateTo(LoginGUI.KEY);
     }
 
     /**

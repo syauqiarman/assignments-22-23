@@ -6,6 +6,7 @@ import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment4.gui.HomeGUI;
 import assignments.assignment4.gui.LoginGUI;
 import assignments.assignment4.gui.RegisterGUI;
+import assignments.assignment4.gui.member.AbstractMemberGUI;
 import assignments.assignment4.gui.member.Loginable;
 import assignments.assignment4.gui.member.employee.EmployeeSystemGUI;
 import assignments.assignment4.gui.member.member.CreateNotaGUI;
@@ -84,6 +85,7 @@ public class MainFrame extends JFrame{
      * */
     public void navigateTo(String page){
         // TODO
+        cards.show(mainPanel, page);
     }
 
     /**
@@ -100,6 +102,9 @@ public class MainFrame extends JFrame{
         for (Loginable panel:
                 loginablePanel) {
             // TODO
+            if (panel.login(id, password)) {
+                navigateTo(panel.getPageName());
+            }
         }
         return false;
     }
