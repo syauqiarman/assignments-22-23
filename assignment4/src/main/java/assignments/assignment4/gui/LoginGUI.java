@@ -134,6 +134,8 @@ public class LoginGUI extends JPanel {
             }
             else {
                 MainFrame.getInstance().login(idString, passwordString); //jika id dan passwordnya sesuai maka akan memanggil method login di mainframe
+                idTextField.setText("");
+                passwordField.setText("");
             }
         }
         

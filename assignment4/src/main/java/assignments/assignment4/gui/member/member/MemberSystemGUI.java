@@ -61,6 +61,13 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         // TODO
+        JTextArea detailNotaTextArea = new JTextArea();
+        for (Nota nota : loggedInMember.getNotaList()) {
+            detailNotaTextArea.append(nota.toString() + "\n");
+            detailNotaTextArea.setEditable(false);
+        }
+        JOptionPane.showMessageDialog(this, detailNotaTextArea, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     /**

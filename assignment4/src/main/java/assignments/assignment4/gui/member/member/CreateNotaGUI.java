@@ -4,6 +4,7 @@ import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.AntarService;
 import assignments.assignment3.nota.service.SetrikaService;
+import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
 
@@ -29,6 +30,8 @@ public class CreateNotaGUI extends JPanel {
     private final Calendar cal;
     private final MemberSystemGUI memberSystemGUI;
     private JPanel mainPanel;
+    private boolean antarSelected;
+    private boolean setrikaSelected;
 
     public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {
         this.memberSystemGUI = memberSystemGUI;
@@ -96,8 +99,10 @@ public class CreateNotaGUI extends JPanel {
                 JCheckBox source = (JCheckBox) e.getSource();
                 if (source.isSelected()) {
                     System.out.println("Checkbox setrika is selected");
+                    setrikaSelected = true;
                 } else {
                     System.out.println("Checkbox setrika is unselected");
+                    setrikaSelected = false;
                 }
             }
         });
@@ -114,8 +119,10 @@ public class CreateNotaGUI extends JPanel {
                 JCheckBox source = (JCheckBox) e.getSource();
                 if (source.isSelected()) {
                     System.out.println("Checkbox Antar is selected");
+                    antarSelected = true;
                 } else {
                     System.out.println("Checkbox Antar is unselected");
+                    antarSelected = false;
                 }
             }
         });
@@ -181,6 +188,49 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void createNota() {
         // TODO
+        String selectedPaket = (String) paketComboBox.getSelectedItem();
+        String beratStr = beratTextField.getText();
+        
+
+        if (beratStr.matches("[0-9]+") != true || beratStr.contains(" ") || Integer.parseInt(beratStr) == 0) {
+            System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+            JOptionPane.showMessageDialog(this, "Harap masukkan berat cucian Anda dalam bentuk bilangan positif!", "Invalid Berat", JOptionPane.ERROR_MESSAGE);
+            beratTextField.setText("");
+            return;
+        } 
+        int berat = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
+        
+        if (berat < 2) {    //jika berat kurang dari 2
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            JOptionPane.showMessageDialog(this, "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg", "Berat Information", JOptionPane.INFORMATION_MESSAGE);
+            berat = 2;  //berat diubah menjadi 2
+        }
+        Nota notaBaru = new Nota(memberSystemGUI.getLoggedInMember(), berat, selectedPaket, fmt.format(cal.getTime())); //membuat nota baru
+        ((Member)memberSystemGUI.getLoggedInMember()).addNota(notaBaru);    //menambahkan nota ke array notaList di Member yang sifatnya perorangan
+        NotaManager.addNota(notaBaru);  //menambahkan nota ke array notaList di NotaManager yang sifatnya keseluruhan
+        
+        if (setrikaSelected) {    //jika pilihanSetrika bukan "x" akan masuk kesini
+            LaundryService setrika = new SetrikaService();  //membuat SetrikaService baru
+            notaBaru.addService(setrika);   //menambahkan service setrika ke nota
+        }
+
+        if (antarSelected) {  //jika pilihanAntar bukan "x" akan masuk kesini
+            LaundryService antar = new AntarService();  //membuat AntarService baru
+            notaBaru.addService(antar); //menambahkan service antar ke nota
+        }
+
+        JOptionPane.showMessageDialog(this, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        beratTextField.setText("");
+        paketComboBox.setSelectedIndex(0); // Mengosongkan (uncheck) checkbox
+        antarCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
+        setrikaCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
+        setrikaSelected = false;
+        antarSelected = false;
+        
+        //CEK
+        for (Nota nota : memberSystemGUI.getLoggedInMember().getNotaList()) {
+            System.out.println(nota); 
+        }
     }
 
     /**
@@ -189,5 +239,6 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void handleBack() {
         // TODO
+        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
     }
 }

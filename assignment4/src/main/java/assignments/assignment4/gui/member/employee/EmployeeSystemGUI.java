@@ -57,6 +57,13 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         // TODO
+        //JTextField displayNotaText = new JTextField();
+        String displayNotaText = "";
+        for (Nota nota : NotaManager.notaList) {
+            displayNotaText += nota.getNotaStatus() + "\n";
+        }
+        JOptionPane.showMessageDialog(this, displayNotaText, "List Nota", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     /**
@@ -65,5 +72,11 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        JOptionPane.showMessageDialog(this, "Stand back! " + loggedInMember.getNama() + " beginning to nyuci!", "Nyuci Time", JOptionPane.INFORMATION_MESSAGE);
+        String kerja = "";
+        for (Nota nota : NotaManager.notaList) {    //mengerjakan semua nota yang ada sesuai servicenya
+            kerja += nota.kerjakan() + "\n";
+        }
+        JOptionPane.showMessageDialog(this, kerja, "Nyuci Result", JOptionPane.INFORMATION_MESSAGE);
     }
 }
