@@ -49,7 +49,7 @@ public class HomeGUI extends JPanel {
     mainPanel.add(titleLabel, gbc);
 
     // Set up date label
-    dateLabel = new JLabel("Today is ");
+    dateLabel = new JLabel("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
     dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
     dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
     gbc.gridy = 1;
@@ -118,5 +118,8 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "toNextDayButton"
      * */
     private void handleNextDay() {
+        NotaManager.toNextDay();    //memanggil method toNextDay yang berada di NotaManager
+        dateLabel.setText("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
+        JOptionPane.showMessageDialog(this, "Kamu tidur hari ini... zzz...", "Next Day", JOptionPane.INFORMATION_MESSAGE);
     }
 }

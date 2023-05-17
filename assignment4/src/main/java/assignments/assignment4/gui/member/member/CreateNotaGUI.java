@@ -98,10 +98,8 @@ public class CreateNotaGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JCheckBox source = (JCheckBox) e.getSource();
                 if (source.isSelected()) {
-                    System.out.println("Checkbox setrika is selected");
                     setrikaSelected = true;
                 } else {
-                    System.out.println("Checkbox setrika is unselected");
                     setrikaSelected = false;
                 }
             }
@@ -118,10 +116,8 @@ public class CreateNotaGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JCheckBox source = (JCheckBox) e.getSource();
                 if (source.isSelected()) {
-                    System.out.println("Checkbox Antar is selected");
                     antarSelected = true;
                 } else {
-                    System.out.println("Checkbox Antar is unselected");
                     antarSelected = false;
                 }
             }
@@ -193,15 +189,13 @@ public class CreateNotaGUI extends JPanel {
         
 
         if (beratStr.matches("[0-9]+") != true || beratStr.contains(" ") || Integer.parseInt(beratStr) == 0) {
-            System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
-            JOptionPane.showMessageDialog(this, "Harap masukkan berat cucian Anda dalam bentuk bilangan positif!", "Invalid Berat", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Berat cucian harus berisi angka", "Error", JOptionPane.ERROR_MESSAGE);
             beratTextField.setText("");
             return;
         } 
         int berat = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
         
         if (berat < 2) {    //jika berat kurang dari 2
-            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
             JOptionPane.showMessageDialog(this, "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg", "Berat Information", JOptionPane.INFORMATION_MESSAGE);
             berat = 2;  //berat diubah menjadi 2
         }
@@ -226,11 +220,6 @@ public class CreateNotaGUI extends JPanel {
         setrikaCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
         setrikaSelected = false;
         antarSelected = false;
-        
-        //CEK
-        for (Nota nota : memberSystemGUI.getLoggedInMember().getNotaList()) {
-            System.out.println(nota); 
-        }
     }
 
     /**
@@ -240,5 +229,11 @@ public class CreateNotaGUI extends JPanel {
     private void handleBack() {
         // TODO
         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        beratTextField.setText("");
+        paketComboBox.setSelectedIndex(0); // Mengosongkan (uncheck) checkbox
+        antarCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
+        setrikaCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
+        setrikaSelected = false;
+        antarSelected = false;
     }
 }

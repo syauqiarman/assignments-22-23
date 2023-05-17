@@ -98,7 +98,6 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         } else {
             return false;
         }
-        
     }
 
     /**

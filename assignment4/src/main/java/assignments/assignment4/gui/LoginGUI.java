@@ -121,16 +121,16 @@ public class LoginGUI extends JPanel {
 
         SystemCLI systemCLI = loginManager.getSystem(idString);  //mengecek apakah Id tersebut ada dan apakah rolenya dengan memanggil method getSystem
         if(systemCLI == null){  //jika id tadi tidak ditemukan maka akan masuk sini
+            JOptionPane.showMessageDialog(this, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
             idTextField.setText("");
             passwordField.setText("");
-            JOptionPane.showMessageDialog(this, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             Member member = systemCLI.authUser(idString, passwordString);
             if (member == null) {
+                JOptionPane.showMessageDialog(this, "Invalid ID or Password!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
                 idTextField.setText("");
                 passwordField.setText("");
-                JOptionPane.showMessageDialog(this, "Invalid ID or Password!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
             }
             else {
                 MainFrame.getInstance().login(idString, passwordString); //jika id dan passwordnya sesuai maka akan memanggil method login di mainframe

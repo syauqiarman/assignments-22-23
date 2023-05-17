@@ -62,12 +62,18 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     private void showDetailNota() {
         // TODO
         JTextArea detailNotaTextArea = new JTextArea();
-        for (Nota nota : loggedInMember.getNotaList()) {
-            detailNotaTextArea.append(nota.toString() + "\n");
-            detailNotaTextArea.setEditable(false);
+        detailNotaTextArea.setEditable(false);
+        if (loggedInMember.getNotaList().length == 0) {
+            detailNotaTextArea.setText("Belum pernah laundry di CuciCuci, hiks :'(");
+        } else {
+            for (Nota nota : loggedInMember.getNotaList()) {
+                detailNotaTextArea.append(nota.toString() + "\n");
+            }
         }
-        JOptionPane.showMessageDialog(this, detailNotaTextArea, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
-
+        JScrollPane detailNotaScrollPane = new JScrollPane(detailNotaTextArea);
+        detailNotaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        detailNotaScrollPane.setPreferredSize(new Dimension(400, 300));
+        JOptionPane.showMessageDialog(this, detailNotaScrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
