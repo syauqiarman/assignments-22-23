@@ -4,6 +4,7 @@ import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 
 import assignments.assignment3.user.menu.SystemCLI;
+import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
@@ -60,12 +61,12 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         //JTextField displayNotaText = new JTextField();
         String displayNotaText = "";
         if (NotaManager.notaList.length == 0) {
-            JOptionPane.showMessageDialog(this, "Belum ada nota", "List Nota", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Belum ada nota", "List Nota", JOptionPane.ERROR_MESSAGE, MainFrame.messagePict("cry.png"));
         } else {
             for (Nota nota : NotaManager.notaList) {
                 displayNotaText += nota.getNotaStatus() + "\n";
             }
-            JOptionPane.showMessageDialog(this, displayNotaText, "List Nota", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, displayNotaText, "List Nota", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("stickynotes.png"));
         }
     }
 
@@ -75,15 +76,15 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
-        JOptionPane.showMessageDialog(this, "Stand back! " + loggedInMember.getNama() + " beginning to nyuci!", "Nyuci Time", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Stand back! " + loggedInMember.getNama() + " beginning to nyuci!", "Nyuci Time", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("laundrymachine.png"));
         String kerja = "";
         if (NotaManager.notaList.length == 0) {
-            JOptionPane.showMessageDialog(this, "Nothing to cuci here", "Nyuci Result", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Nothing to cuci here", "Nyuci Results", JOptionPane.ERROR_MESSAGE, MainFrame.messagePict("cry.png"));
         } else {
             for (Nota nota : NotaManager.notaList) {    //mengerjakan semua nota yang ada sesuai servicenya
                 kerja += nota.kerjakan() + "\n";
             }
-            JOptionPane.showMessageDialog(this, kerja, "Nyuci Results", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, kerja, "Nyuci Results", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("clean.png"));
         }
     }
 }

@@ -12,23 +12,45 @@ import java.awt.event.ActionListener;
 public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     private JLabel welcomeLabel;
     private JLabel loggedInAsLabel;
+    private JPanel pictPanel;
+    private JPanel northPanel;
     protected Member loggedInMember;
     private final SystemCLI systemCLI;
 
     public AbstractMemberGUI(SystemCLI systemCLI) {
         super(new BorderLayout());
         this.systemCLI = systemCLI;
+        setBackground(Color.decode("#FEFBE9"));
         // Set up welcome label
+
+        northPanel = new JPanel(new GridBagLayout());
+        northPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        northPanel.setBackground(Color.decode("#FEFBE9"));
+        add(northPanel, BorderLayout.NORTH);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        ImageIcon emberIcon = MainFrame.messagePict("ember.png");
+        JLabel ember = new JLabel(emberIcon);
+        gbc.insets = new Insets(20, 0, 0, 0);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        northPanel.add(ember, gbc);
+
         welcomeLabel = new JLabel("", SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        add(welcomeLabel, BorderLayout.NORTH);
+        welcomeLabel.setFont(new Font("Garamond", Font.BOLD, 30));
+        gbc.insets = new Insets(10, 0, 0, 0);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        northPanel.add(welcomeLabel, gbc);
 
         // Set up footer
         loggedInAsLabel = new JLabel("", SwingConstants.CENTER);
+        loggedInAsLabel.setFont(new Font("Garamond", Font.PLAIN, 16));
         add(loggedInAsLabel, BorderLayout.SOUTH);
 
         // Initialize buttons
         JPanel buttonsPanel = initializeButtons();
+        buttonsPanel.setBackground(Color.decode("#FEFBE9"));
         add(buttonsPanel, BorderLayout.CENTER);
     }
 
@@ -51,14 +73,15 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.weightx = 1.0;
-        gbc.weighty = 0.5;
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.weighty = 0;
+        gbc.insets = new Insets(5, 250, 5, 250);
 
         for (int i = 0; i < buttons.length; i++) {
             JButton button = buttons[i];
+            MainFrame.buttonThing(button);
             button.addActionListener(listeners[i]);
             buttonsPanel.add(button, gbc);
         }
@@ -70,6 +93,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
                 MainFrame.getInstance().logout();
             }
         });
+        MainFrame.buttonThing(logoutButton);
         buttonsPanel.add(logoutButton, gbc);
         return buttonsPanel;
     }

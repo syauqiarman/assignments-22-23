@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 public class LoginGUI extends JPanel {
     public static final String KEY = "LOGIN";
     private JPanel mainPanel;
+    private JPanel pictPanel;
+    private JPanel contentPanel;
     private JLabel idLabel;
     private JTextField idTextField;
     private JLabel passwordLabel;
@@ -27,9 +29,9 @@ public class LoginGUI extends JPanel {
         this.loginManager = loginManager;
 
         // Set up main panel, Feel free to make any changes
-        mainPanel = new JPanel(new GridBagLayout());
+        mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
+        mainPanel.setBackground(Color.decode("#FEFBE9"));
         initGUI();
 
         add(mainPanel, BorderLayout.CENTER);
@@ -42,32 +44,53 @@ public class LoginGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        GridBagConstraints gbc = new GridBagConstraints();
+        pictPanel = new JPanel(new GridBagLayout());
+        pictPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pictPanel.setBackground(Color.decode("#FEFBE9"));
+        mainPanel.add(pictPanel, BorderLayout.EAST);
+
+        ImageIcon kucingIcon = MainFrame.messagePict("anjing2.png");
+        JLabel kucing = new JLabel(kucingIcon);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 0, 5, 40);
+        pictPanel.add(kucing, gbc);
+
+        contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPanel.setBackground(Color.decode("#FEFBE9"));
+        mainPanel.add(contentPanel, BorderLayout.WEST);
+
         // Set up name label and text field
         idLabel = new JLabel("Masukkan ID Anda: ");
-        GridBagConstraints gbc = new GridBagConstraints();
+        idLabel.setFont(new Font("Garamond", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(0, 0, 5, 5);
-        mainPanel.add(idLabel, gbc);
+        contentPanel.add(idLabel, gbc);
 
-        idTextField = new JTextField(20);
+        idTextField = new JTextField(30);
+        idTextField.setFont(new Font("Garamond", Font.PLAIN, 15));
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 0, 5, 0);
-        mainPanel.add(idTextField, gbc);
+        contentPanel.add(idTextField, gbc);
 
         // Set up password label and password field
         passwordLabel = new JLabel("Masukkan password Anda: ");
+        passwordLabel.setFont(new Font("Garamond", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 0, 0, 5);
-        mainPanel.add(passwordLabel, gbc);
+        contentPanel.add(passwordLabel, gbc);
 
-        passwordField = new JPasswordField(20);
+        passwordField = new JPasswordField(30);
+        passwordField.setFont(new Font("Garamond", Font.PLAIN, 15));
         gbc.gridx = 0;
         gbc.gridy = 3;
-        mainPanel.add(passwordField, gbc);
+        contentPanel.add(passwordField, gbc);
 
         // Set up register button
         loginButton = new JButton("Login");
@@ -80,9 +103,10 @@ public class LoginGUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(10, 0, 0, 0);
+        gbc.insets = new Insets(10, 0, 0, 5);
+        MainFrame.buttonThing(loginButton);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        mainPanel.add(loginButton, gbc);
+        contentPanel.add(loginButton, gbc);
 
         // Set up back button
         backButton = new JButton("Back");
@@ -94,10 +118,10 @@ public class LoginGUI extends JPanel {
         });
         gbc.gridx = 0;
         gbc.gridy = 5;
-        gbc.insets = new Insets(10, 0, 0, 0);
+        gbc.insets = new Insets(10, 0, 0, 5);
+        MainFrame.buttonThing(backButton);
         gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        mainPanel.add(backButton, gbc);
+        contentPanel.add(backButton, gbc);
     }
 
     /**
@@ -121,14 +145,14 @@ public class LoginGUI extends JPanel {
 
         SystemCLI systemCLI = loginManager.getSystem(idString);  //mengecek apakah Id tersebut ada dan apakah rolenya dengan memanggil method getSystem
         if(systemCLI == null){  //jika id tadi tidak ditemukan maka akan masuk sini
-            JOptionPane.showMessageDialog(this, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "ID atau password invalid!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE, MainFrame.messagePict("cry.png"));
             idTextField.setText("");
             passwordField.setText("");
             return;
         } else {
             Member member = systemCLI.authUser(idString, passwordString);
             if (member == null) {
-                JOptionPane.showMessageDialog(this, "Invalid ID or Password!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid ID or Password!", "Invalid ID or Password", JOptionPane.ERROR_MESSAGE, MainFrame.messagePict("cry.png"));
                 idTextField.setText("");
                 passwordField.setText("");
             }

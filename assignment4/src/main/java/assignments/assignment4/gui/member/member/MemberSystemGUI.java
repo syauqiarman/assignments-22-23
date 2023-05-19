@@ -73,7 +73,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         JScrollPane detailNotaScrollPane = new JScrollPane(detailNotaTextArea);
         detailNotaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         detailNotaScrollPane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(this, detailNotaScrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, detailNotaScrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("stickynotes.png"));
     }
 
     /**

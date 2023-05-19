@@ -13,8 +13,10 @@ import assignments.assignment4.gui.member.member.CreateNotaGUI;
 import assignments.assignment4.gui.member.member.MemberSystemGUI;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainFrame extends JFrame{
     private static MainFrame instance;
@@ -42,7 +44,9 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
+        setResizable(false);
         setLocationRelativeTo(null);
+        
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
                 memberSystemGUI,
@@ -120,6 +124,35 @@ public class MainFrame extends JFrame{
             panel.logout();
         }
         navigateTo(HomeGUI.KEY);
+    }
+
+    public static void buttonThing(JButton button) {
+        button.setBackground(Color.decode("#183A1D"));
+        button.setFont(new Font("Garamond", Font.BOLD, 15));
+        // Set warna teks JButton
+        button.setForeground(Color.decode("#E1EEDD"));
+        // Hapus stroke di sekitar JButton
+        button.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.decode("#183A1D")), new EmptyBorder(5, 5, 5, 5)));
+        // Mengatur kursor menjadi clickable saat menyentuh button
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        // Tambahkan pendengar mouse untuk mengubah warna saat kursor berada di wilayah button
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(Color.decode("#E1EEDD")); // Ubah warna saat kursor masuk ke button
+                button.setForeground(Color.decode("#183A1D"));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(Color.decode("#183A1D")); // Kembalikan warna saat kursor keluar dari button
+                button.setForeground(Color.decode("#E1EEDD"));
+            }
+        });
+    }
+
+    public static ImageIcon messagePict(String fileName) {
+        String property = System.getProperty("user.dir") + "/assignment4/src/main/java/assignments/assignment4/gui/properties/" + fileName;
+        return new ImageIcon(property);
     }
 
     public static void main(String[] args) {

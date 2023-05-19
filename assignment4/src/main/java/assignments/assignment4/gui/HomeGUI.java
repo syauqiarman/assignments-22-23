@@ -25,7 +25,8 @@ public class HomeGUI extends JPanel {
         // Set up main panel, Feel free to make any changes
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
+        // Set warna latar belakang frame menggunakan hex
+        mainPanel.setBackground(Color.decode("#FEFBE9"));
         initGUI();
 
         add(mainPanel, BorderLayout.CENTER);
@@ -38,22 +39,57 @@ public class HomeGUI extends JPanel {
      * */
     private void initGUI() {
     // Set up title label
-    titleLabel = new JLabel("Selamat Datang di CuciCuci System!");
-    titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-    titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    titleLabel = new JLabel("Selamat Datang di");
+    titleLabel.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 20));
+    //titleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
     GridBagConstraints gbc = new GridBagConstraints();
-    gbc.gridx = 0;
+    gbc.anchor = GridBagConstraints.EAST;
+    gbc.gridx = 2;
     gbc.gridy = 0;
-    gbc.gridwidth = 2;
+    //gbc.gridwidth = 2;
+    gbc.insets = new Insets(0, 0, 10, 0);
+    mainPanel.add(titleLabel, gbc);
+
+    titleLabel = new JLabel("CuciCuci System!");
+    titleLabel.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 25));
+    gbc.gridx = 2;
+    gbc.gridy = 1;
+    //gbc.gridwidth = 2;
     gbc.insets = new Insets(0, 0, 10, 0);
     mainPanel.add(titleLabel, gbc);
 
     // Set up date label
     dateLabel = new JLabel("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
-    dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+    dateLabel.setFont(new Font("Garamond", Font.BOLD, 16));
     dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    gbc.gridy = 1;
+    gbc.gridx = 0;
+    gbc.gridy = 0;
     mainPanel.add(dateLabel, gbc);
+    
+    // Buat labelkosong dan atur posisinya di koordinat (1, 1)
+    JLabel labelKosong1 = new JLabel("                                                             ");
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    mainPanel.add(labelKosong1, gbc);
+
+    // Buat labelkosong dan atur posisinya di koordinat (1, 1)
+    JLabel labelKosong2 = new JLabel("          ");
+    gbc.gridx = 2;
+    gbc.gridy = 2;
+    mainPanel.add(labelKosong2, gbc);
+
+    // Buat labelkosong dan atur posisinya di koordinat (1, 1)
+    JLabel labelKosong3 = new JLabel("          ");
+    gbc.gridx = 2;
+    gbc.gridy = 3;
+    mainPanel.add(labelKosong3, gbc);
+
+    // Buat ImageIcon dari gambar yang ingin dimasukkan
+    ImageIcon plantIcon = MainFrame.messagePict("plant.png");
+    JLabel plant = new JLabel(plantIcon);
+    gbc.gridx = 0;
+    gbc.gridy = 6;
+    mainPanel.add(plant, gbc);
 
     // Set up register button
     registerButton = new JButton("Register");
@@ -63,10 +99,12 @@ public class HomeGUI extends JPanel {
             handleToRegister();
         }
     });
-    gbc.gridy = 2;
-    gbc.gridwidth = 1;
+    gbc.gridx = 2;
+    gbc.gridy = 4;
+    //gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.insets = new Insets(20, 0, 0, 5);
+    MainFrame.buttonThing(registerButton);
+    //gbc.insets = new Insets(0, 20, 0, 20);
     mainPanel.add(registerButton, gbc);
 
     // Set up login button
@@ -77,8 +115,10 @@ public class HomeGUI extends JPanel {
             handleToLogin();
         }
     });
-    gbc.gridx = 1;
-    gbc.insets = new Insets(20, 5, 0, 0);
+    gbc.gridx = 2;
+    gbc.gridy = 5;
+    MainFrame.buttonThing(loginButton);
+    //gbc.insets = new Insets(0, 0, 0, 5);
     mainPanel.add(loginButton, gbc);
 
     // Set up toNextDay button
@@ -89,10 +129,11 @@ public class HomeGUI extends JPanel {
             handleNextDay();
         }
     });
-    gbc.gridx = 0;
-    gbc.gridy = 3;
-    gbc.gridwidth = 2;
-    gbc.insets = new Insets(20, 0, 0, 0);
+    gbc.gridx = 2;
+    gbc.gridy = 6;
+    //gbc.gridwidth = 2;
+    MainFrame.buttonThing(toNextDayButton);
+    //gbc.insets = new Insets(0, 0, 0, 0);
     mainPanel.add(toNextDayButton, gbc);
 
     }
@@ -118,8 +159,9 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "toNextDayButton"
      * */
     private void handleNextDay() {
-        NotaManager.toNextDay();    //memanggil method toNextDay yang berada di NotaManager
+        toNextDay();    //memanggil method toNextDay yang berada di NotaManager
         dateLabel.setText("Hari ini: " + NotaManager.fmt.format(NotaManager.cal.getTime()));
-        JOptionPane.showMessageDialog(this, "Kamu tidur hari ini... zzz...", "Next Day", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Kamu tidur hari ini... zzz...", "Next Day", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("relax.png"));
     }
+
 }
