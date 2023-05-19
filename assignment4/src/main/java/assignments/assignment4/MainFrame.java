@@ -37,12 +37,12 @@ public class MainFrame extends JFrame{  //implementasi kelas MainFrame yang meru
 
     private MainFrame(){
         super("CuciCuciSystem");    //set judul dari MainFrame
-    //    //TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
-    //    // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-    //    employeeSystem.addEmployee(new Employee[]{
-    //            new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-    //            new Employee("Regret", "FansBeratKanaArima")
-    //    });
+       //TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
+       // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+       employeeSystem.addEmployee(new Employee[]{
+               new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
+               new Employee("Regret", "FansBeratKanaArima")
+       });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //set default untuk close
         setSize(700, 432);  //set size dari MainFrame
         setVisible(true);   //set visible agar dapat terlihat
