@@ -1,5 +1,6 @@
-package assignments.assignment4.gui.member;
+package assignments.assignment4.gui.member; //package assignment4.gui.member
 
+//import yang diperlukan
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
@@ -9,26 +10,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//implementasi kelas AbstractMemberGUI yang merupakan turunan dari kelas JPanel dan mengimplementasikan interface Loginable.
 public abstract class AbstractMemberGUI extends JPanel implements Loginable{
+    //datafield yang digunakan
     private JLabel welcomeLabel;
     private JLabel loggedInAsLabel;
-    private JPanel pictPanel;
     private JPanel northPanel;
     protected Member loggedInMember;
     private final SystemCLI systemCLI;
 
     public AbstractMemberGUI(SystemCLI systemCLI) {
-        super(new BorderLayout());
+        super(new BorderLayout());  // Setup layout
         this.systemCLI = systemCLI;
-        setBackground(Color.decode("#FEFBE9"));
-        // Set up welcome label
-
+        setBackground(Color.decode("#FEFBE9")); // Set up background
+        
+        // Set up north panel
         northPanel = new JPanel(new GridBagLayout());
         northPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         northPanel.setBackground(Color.decode("#FEFBE9"));
         add(northPanel, BorderLayout.NORTH);
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();  //set up gbc
+        // Set up image
         ImageIcon emberIcon = MainFrame.messagePict("ember.png");
         JLabel ember = new JLabel(emberIcon);
         gbc.insets = new Insets(20, 0, 0, 0);
@@ -36,6 +39,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         gbc.gridy = 1;
         northPanel.add(ember, gbc);
 
+        // Set up welcome label
         welcomeLabel = new JLabel("", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Garamond", Font.BOLD, 30));
         gbc.insets = new Insets(10, 0, 0, 0);
@@ -43,13 +47,13 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         gbc.gridy = 0;
         northPanel.add(welcomeLabel, gbc);
 
-        // Set up footer
+        // Set up logged in as label
         loggedInAsLabel = new JLabel("", SwingConstants.CENTER);
         loggedInAsLabel.setFont(new Font("Garamond", Font.PLAIN, 16));
         add(loggedInAsLabel, BorderLayout.SOUTH);
 
-        // Initialize buttons
-        JPanel buttonsPanel = initializeButtons();
+        // Initialize buttons panel
+        JPanel buttonsPanel = initializeButtons();  //memanggil method yg menginisiasi button
         buttonsPanel.setBackground(Color.decode("#FEFBE9"));
         add(buttonsPanel, BorderLayout.CENTER);
     }
@@ -62,15 +66,16 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return JPanel yang di dalamnya berisi Buttons.
      * */
     protected JPanel initializeButtons() {
-        JButton[] buttons = createButtons();
-        ActionListener[] listeners = createActionListeners();
-        //DICOMMENT SEMENTARA
+        JButton[] buttons = createButtons();    //pembuatan button dan dikumpulkan di array buttons
+        ActionListener[] listeners = createActionListeners();   //pembuatan actionlistener dan dikumpulkan di array listeners
+        //pengecekan buttons dan listeners
          if (buttons.length != listeners.length) {
              throw new IllegalStateException("Number of buttons and listeners must be equal.");
          }
 
-        JPanel buttonsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        JPanel buttonsPanel = new JPanel(new GridBagLayout());  //buttons panel dibuat
+        GridBagConstraints gbc = new GridBagConstraints();  //set up gbc
+        //memposisikan button
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -79,21 +84,22 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         gbc.weighty = 0;
         gbc.insets = new Insets(5, 250, 5, 250);
 
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < buttons.length; i++) {  //loop per button
             JButton button = buttons[i];
-            MainFrame.buttonThing(button);
-            button.addActionListener(listeners[i]);
+            MainFrame.buttonThing(button);  //setting tampilan button
+            button.addActionListener(listeners[i]); //setting actionlistenernya
             buttonsPanel.add(button, gbc);
         }
 
+        // Set up logout button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.getInstance().logout();
+                MainFrame.getInstance().logout();   //saat ditekan akan memanggil method logout di mainframe
             }
         });
-        MainFrame.buttonThing(logoutButton);
+        MainFrame.buttonThing(logoutButton);    //setting tampilan button
         buttonsPanel.add(logoutButton, gbc);
         return buttonsPanel;
     }
@@ -114,10 +120,10 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     public boolean login(String id, String password) {
         // TODO
         Member authMember = systemCLI.authUser(id, password);   //mengambil member yang terdaftar dengan memanggil method authUser
-        if (authMember != null) {
+        if (authMember != null) {   //jika ada masuk sini
             loggedInMember = authMember;
-            welcomeLabel.setText("Welcome, " + loggedInMember.getNama());
-            loggedInAsLabel.setText("Logged in as: "+ loggedInMember.getId());
+            welcomeLabel.setText("Welcome, " + loggedInMember.getNama());   //set welcome label
+            loggedInAsLabel.setText("Logged in as: "+ loggedInMember.getId());  //set logged in as label
             return true;
         } else {
             return false;
@@ -129,9 +135,10 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * Akan mengubah loggedInMemberMenjadi null.
      * */
     public void logout() {
+        //set semua textfield jadi kosong
         welcomeLabel.setText("");
         loggedInAsLabel.setText("");
-        loggedInMember = null;
+        loggedInMember = null;  //logged in membernya di null kan agar bisa dipakai lagi
     }
 
     /**

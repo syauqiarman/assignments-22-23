@@ -1,5 +1,6 @@
-package assignments.assignment4.gui.member.member;
+package assignments.assignment4.gui.member.member;  //package assignment4.gui.member.member
 
+//import yang diperlukan
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
@@ -10,13 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class MemberSystemGUI extends AbstractMemberGUI {
+public class MemberSystemGUI extends AbstractMemberGUI {    //implementasi kelas MemberSystemGUI yang merupakan turunan dari kelas AbstractMemberGUI
     public static final String KEY = "MEMBER";
-
+    //konstruktor menerima parameter systemCLI untuk menginisialisasi objek MemberSystemGUI
     public MemberSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
     }
 
+    //getter
     @Override
     public String getPageName(){
         return KEY;
@@ -35,7 +37,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     @Override
     protected JButton[] createButtons() {
         // TODO
-        return new JButton[]{
+        return new JButton[]{   //button yang diperlukan
             new JButton("Saya ingin laundry"),
             new JButton("Lihat detail nota saya")
         };
@@ -49,7 +51,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected ActionListener[] createActionListeners() {
-        return new ActionListener[]{
+        return new ActionListener[]{    //actionlistener yang diperlukan
                 e -> createNota(),
                 e -> showDetailNota(),
         };
@@ -61,18 +63,19 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         // TODO
-        JTextArea detailNotaTextArea = new JTextArea();
-        detailNotaTextArea.setEditable(false);
-        if (loggedInMember.getNotaList().length == 0) {
+        JTextArea detailNotaTextArea = new JTextArea(); //set jtextarea
+        detailNotaTextArea.setEditable(false);  //set agar non editable
+        if (loggedInMember.getNotaList().length == 0) { //kalau panjang listnya 0, masuk kesini
             detailNotaTextArea.setText("Belum pernah laundry di CuciCuci, hiks :'(");
-        } else {
-            for (Nota nota : loggedInMember.getNotaList()) {
+        } else {    //selain itu masuk sini
+            for (Nota nota : loggedInMember.getNotaList()) {    //loop pernota dan ditambahkan ke detailNotaTextArea
                 detailNotaTextArea.append(nota.toString() + "\n");
             }
         }
-        JScrollPane detailNotaScrollPane = new JScrollPane(detailNotaTextArea);
-        detailNotaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        detailNotaScrollPane.setPreferredSize(new Dimension(400, 300));
+        JScrollPane detailNotaScrollPane = new JScrollPane(detailNotaTextArea); //buat agar bisa di scroll
+        detailNotaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); //scroll vertikal
+        detailNotaScrollPane.setPreferredSize(new Dimension(400, 300)); //set size
+        //mengeluarkan pesan information message
         JOptionPane.showMessageDialog(this, detailNotaScrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("stickynotes.png"));
     }
 
@@ -82,7 +85,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void createNota() {
         // TODO
-        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
+        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);  //menampilkan panel yang dituju
     }
 
 }

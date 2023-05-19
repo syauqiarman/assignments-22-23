@@ -1,5 +1,6 @@
-package assignments.assignment4.gui.member.member;
+package assignments.assignment4.gui.member.member;  //package assignment4.gui.member.member
 
+//import yang diperlukan
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.AntarService;
@@ -15,7 +16,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CreateNotaGUI extends JPanel {
+public class CreateNotaGUI extends JPanel { //implementasi kelas CreateNotarGUI yang merupakan turunan dari kelas JPanel
+    //datafield yang digunakan
     public static final String KEY = "CREATE_NOTA";
     private JLabel paketLabel;
     private JComboBox<String> paketComboBox;
@@ -38,13 +40,13 @@ public class CreateNotaGUI extends JPanel {
         this.fmt = NotaManager.fmt;
         this.cal = NotaManager.cal;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
         mainPanel.setBackground(Color.decode("#FEFBE9"));
         setBackground(Color.decode("#FEFBE9"));
-        initGUI();
-        add(mainPanel, BorderLayout.CENTER);
+        initGUI();  //memanggil method initGUI
+        add(mainPanel, BorderLayout.CENTER);    //menambahkan mainPanel kedalam kontainer utama menggunakan layout BorderLayout dengan posisi CENTER
     }
 
     /**
@@ -54,40 +56,39 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
-        // Set up name label and text field
+        // Set up paket label
+        GridBagConstraints gbc = new GridBagConstraints();  //set up gbc
         paketLabel = new JLabel("Paket Laundry: ");
         paketLabel.setFont(new Font("Garamond", Font.BOLD, 16));
-        GridBagConstraints gbc = new GridBagConstraints();
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(75, 15, 5, 5);
         mainPanel.add(paketLabel, gbc);
 
+        // Set up paket combobox
         paketComboBox = new JComboBox<>(new String[]{"Express", "Fast", "Reguler"});
         paketComboBox.setBackground(Color.decode("#FEFBE9"));
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.insets = new Insets(75, 5, 5, 5);
         mainPanel.add(paketComboBox, gbc);
 
-        // Set up password label and password field
+        // Set up show paket button
         showPaketButton = new JButton("Show Paket");
         showPaketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showPaket();
+                showPaket();    //saat ditekan akan memanggil method showPaket
             }
         });
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.insets = new Insets(75, 5, 5, 5);
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
-        MainFrame.buttonThing(showPaketButton);
+        MainFrame.buttonThing(showPaketButton); //setting tampilan button
         mainPanel.add(showPaketButton, gbc);
 
+        // Set up berat label
         beratLabel = new JLabel("Berat Cucian (Kg): ");
         beratLabel.setFont(new Font("Garamond", Font.BOLD, 16));
         gbc.gridx = 0;
@@ -95,6 +96,7 @@ public class CreateNotaGUI extends JPanel {
         gbc.insets = new Insets(0, 15, 5, 0);
         mainPanel.add(beratLabel, gbc);
 
+        // Set up berat textfield
         beratTextField = new JTextField(6);
         beratTextField.setFont(new Font("Garamond", Font.PLAIN, 15));
         gbc.gridx = 1;
@@ -102,16 +104,17 @@ public class CreateNotaGUI extends JPanel {
         gbc.insets = new Insets(0, 5, 5, 5);
         mainPanel.add(beratTextField, gbc);
 
+        // Set up setrika checkbox
         setrikaCheckBox = new JCheckBox("Tambah Setrika Service (1000 / Kg)");
         setrikaCheckBox.setFont(new Font("Garamond", Font.BOLD, 16));
         setrikaCheckBox.setBackground(Color.decode("#FEFBE9"));
         setrikaCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JCheckBox source = (JCheckBox) e.getSource();
-                if (source.isSelected()) {
+                JCheckBox source = (JCheckBox) e.getSource();   //mendapatkan isi checkbox
+                if (source.isSelected()) {  //jika selected masuk sini
                     setrikaSelected = true;
-                } else {
+                } else {    //selain itu masuk sini
                     setrikaSelected = false;
                 }
             }
@@ -119,19 +122,19 @@ public class CreateNotaGUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(10, 15, 0, 0);
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(setrikaCheckBox, gbc);
 
+        // Set up antar checkbox
         antarCheckBox = new JCheckBox("Tambah Antar Service (2000 / 4 Kg pertama, kemudian 500 / Kg)");
         antarCheckBox.setFont(new Font("Garamond", Font.BOLD, 16));
         antarCheckBox.setBackground(Color.decode("#FEFBE9"));
         antarCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JCheckBox source = (JCheckBox) e.getSource();
-                if (source.isSelected()) {
+                JCheckBox source = (JCheckBox) e.getSource();   //mendapatkan isi checkbox
+                if (source.isSelected()) {  //jika selected masuk sini
                     antarSelected = true;
-                } else {
+                } else {    //selain itu masuk sini
                     antarSelected = false;
                 }
             }
@@ -139,14 +142,14 @@ public class CreateNotaGUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.insets = new Insets(10, 15, 0, 0);
-        //gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(antarCheckBox, gbc);
 
+        // Set up create nota button
         createNotaButton = new JButton("Buat Nota");
         createNotaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createNota();
+                createNota();   //saat ditekan akan memanggil method createNota
             }
         });
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -154,8 +157,7 @@ public class CreateNotaGUI extends JPanel {
         gbc.gridy = 4;
         gbc.insets = new Insets(5, 20, 5, 20);
         gbc.gridwidth = 3;
-        
-        MainFrame.buttonThing(createNotaButton);
+        MainFrame.buttonThing(createNotaButton);    //setting tampilan button
         mainPanel.add(createNotaButton, gbc);
 
         // Set up back button
@@ -163,14 +165,14 @@ public class CreateNotaGUI extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleBack();
+                handleBack();   //saat ditekan akan memanggil method handleBack
             }
         });
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.insets = new Insets(5, 20, 5, 20);
         gbc.gridwidth = 3;
-        MainFrame.buttonThing(backButton);
+        MainFrame.buttonThing(backButton);  //setting tampilan button
         mainPanel.add(backButton, gbc);
     }
 
@@ -191,6 +193,7 @@ public class CreateNotaGUI extends JPanel {
 
         JLabel label = new JLabel(paketInfo);
         label.setFont(new Font("monospaced", Font.PLAIN, 12));
+        //menampilkan information message
         JOptionPane.showMessageDialog(this, label, "Paket Information", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("stickynotes.png"));
     }
 
@@ -200,18 +203,19 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void createNota() {
         // TODO
+        //mengambil semua isi dari textfield
         String selectedPaket = (String) paketComboBox.getSelectedItem();
         String beratStr = beratTextField.getText();
         
-
+        //jika beratnya tidak sesuai akan mengeluarkan error message
         if (beratStr.matches("[0-9]+") != true || beratStr.contains(" ") || Integer.parseInt(beratStr) == 0) {
             JOptionPane.showMessageDialog(this, "Berat cucian harus berisi angka", "Error", JOptionPane.ERROR_MESSAGE, MainFrame.messagePict("mad.png"));
-            beratTextField.setText("");
+            beratTextField.setText(""); //set berat textfield jadi kosong
             return;
         } 
         int berat = Integer.parseInt(beratStr);  //mengubah string berat menjadi integer
         
-        if (berat < 2) {    //jika berat kurang dari 2
+        if (berat < 2) {    //jika berat kurang dari 2, menampilkan information message
             JOptionPane.showMessageDialog(this, "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg", "Berat Information", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("happy.png"));
             berat = 2;  //berat diubah menjadi 2
         }
@@ -219,19 +223,21 @@ public class CreateNotaGUI extends JPanel {
         ((Member)memberSystemGUI.getLoggedInMember()).addNota(notaBaru);    //menambahkan nota ke array notaList di Member yang sifatnya perorangan
         NotaManager.addNota(notaBaru);  //menambahkan nota ke array notaList di NotaManager yang sifatnya keseluruhan
         
-        if (setrikaSelected) {    //jika pilihanSetrika bukan "x" akan masuk kesini
+        if (setrikaSelected) {    //jika setrikanya selected akan masuk kesini
             LaundryService setrika = new SetrikaService();  //membuat SetrikaService baru
             notaBaru.addService(setrika);   //menambahkan service setrika ke nota
         }
 
-        if (antarSelected) {  //jika pilihanAntar bukan "x" akan masuk kesini
+        if (antarSelected) {  //jika antarnya selected akan masuk kesini
             LaundryService antar = new AntarService();  //membuat AntarService baru
             notaBaru.addService(antar); //menambahkan service antar ke nota
         }
-
+        //menampilkan information message tentang berhasilnya pembuatan nota
         JOptionPane.showMessageDialog(this, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE, MainFrame.messagePict("love.png"));
+        
+        //mengosongkan dan mengembalikan tampilan seperti awal
         beratTextField.setText("");
-        paketComboBox.setSelectedIndex(0); // Mengosongkan (uncheck) checkbox
+        paketComboBox.setSelectedIndex(0); // Mengembalikan combobox ke index 0
         antarCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
         setrikaCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
         setrikaSelected = false;
@@ -244,9 +250,11 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void handleBack() {
         // TODO
-        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);    //menampilkan panel yang dituju
+        
+        //mengosongkan dan mengembalikan tampilan seperti awal
         beratTextField.setText("");
-        paketComboBox.setSelectedIndex(0); // Mengosongkan (uncheck) checkbox
+        paketComboBox.setSelectedIndex(0); // Mengembalikan combobox ke index 0
         antarCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
         setrikaCheckBox.setSelected(false); // Mengosongkan (uncheck) checkbox
         setrikaSelected = false;
